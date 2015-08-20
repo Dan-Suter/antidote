@@ -1,0 +1,13 @@
+<!--#include virtual="/header.htm" -->
+<h2>Opening in August 2015</h2>
+<b>Shop 6 Carnaby Lane, New Brigthon,Christchurch, New Zealand.</b></br> </br>
+ph: 03 3883359 for bookings.</br>
+</span>
+</br>
+<div class="wsite-map" >
+	<!--google maps code don't blink--->
+	<div id="map-canvas"></div>
+	<!--google maps code don't blink--->
+</div>
+<div id="spacer" style="margin-top:20px;"></div>
+<!--#include virtual="/footer.asp" -->

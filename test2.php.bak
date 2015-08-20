@@ -1,0 +1,9 @@
+<?php
+
+$thumb = new Imagick();
+$thumb->readImage('myimage.gif');    $thumb->resizeImage(320,240,Imagick::FILTER_LANCZOS,1);
+$thumb->writeImage('mythumb.gif');
+$thumb->clear();
+$thumb->destroy(); 
+
+?>

@@ -1,0 +1,125 @@
+
+<%
+function StripSQLInject(sText)
+dim aChars
+aChars = array("select", "drop", ";", "--", "insert",  "delete", "xp_",";","/","%",chr(13),chr(10),"""")
+sNewChars = sText
+for i = 0 to uBound(aChars)
+sNewChars = replace(sNewChars, aChars(i), "")
+next
+sNewChars=replace(sNewChars,"'","''")
+StripSQLInject = sNewChars
+end Function
+
+dim sMailerDB
+dim conn
+dim ConnA
+dim connM
+dim sMDB
+dim RsTemp
+dim RsTempA
+'dim ipaddress
+ipaddress = Request.ServerVariables("HTTP_X_FORWARDED_FOR")
+if ipaddress = "" then
+    ipaddress = Request.ServerVariables("REMOTE_ADDR") 
+end if
+	'response.end
+	'response.write "on server 155"
+	'response.end
+	if session("staff_id")="" then
+		if session("cu_id")="" then
+			'strDatabase = "Provider=SQLOLEDB;Data Source=192.168.1.107\v12008r2,1500;Initial Catalog=Mother;Uid=sa;Pwd=Strength2012;"
+			strDatabase = "Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=Mother;Uid=webAnon;Pwd=crackme99;"
+			sMailerDB="Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=MAIL;Uid=webAnon;Pwd=crackme99;"
+		else
+			strDatabase = "Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=Mother;Uid=webCustomer;Pwd=Factory39;"
+			sMailerDB="Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=MAIL;Uid=webCustomer;Pwd=Factory39;"
+		end if
+	else
+		'response.write session("staff_id")
+		strDatabase = "Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=Mother;Uid=WebStaff;Pwd=Factory37;"
+		sMailerDB="Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=MAIL;Uid=WebStaff;Pwd=Factory37;"
+	end if
+
+if session("staff_id")=1 then
+	'strDatabase = "Provider=SQLOLEDB;Data Source=192.168.1.108\dandev;Initial Catalog=Mother;Uid=WebStaff;Pwd=Factory37;"
+	'response.end
+end if
+'x=rwe(strDatabase)
+sMDBA="Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=Mother;Uid=sa;Pwd=Strength2012;"
+sMDBS=sMDBA
+sTaxDB="Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=tax;Uid=sa;Pwd=Strength2012;"
+sMailerDBA="Provider=SQLOLEDB;Data Source=D86LFC2S\botmax;Initial Catalog=Mail;Uid=sa;Pwd=Strength2012;"
+'response.Write strDatabase
+'response.End
+if session("staff_id")="" and ipAddress="192.168.1.151" then
+	'sMDB=sMDBA
+	'response.end
+	'test
+end if
+sDB= strDatabase 
+sMDB=strDatabase
+sLBNZ=strDatabase
+'sMDB=sMDBA
+'x=ifa(sMDB)
+
+
+Sub OpenDB()
+set Conn=server.createobject("ADODB.connection")
+set RsTemp=server.createobject("ADODB.recordset")
+Conn.Connectionstring=sMDB
+Conn.open
+End Sub
+
+Sub CloseDB()
+on error resume next
+RsTemp.close
+set RsTemp=nothing
+Conn.close
+Set Conn=Nothing
+on error goto 0
+End Sub
+
+Sub OpenDB()
+set Conn=server.createobject("ADODB.connection")
+set RsTemp=server.createobject("ADODB.recordset")
+Conn.Connectionstring=sMDB
+Conn.open
+End Sub
+
+Sub CloseDBM()
+on error resume next
+RsTemp.close
+set RsTemp=nothing
+ConnM.close
+Set ConnM=Nothing
+on error goto 0
+End Sub
+
+Sub OpenDBM()
+set ConnM=server.createobject("ADODB.connection")
+ConnM.Connectionstring=sMailerDB
+ConnM.open
+End Sub
+
+
+Sub OpenDBA()
+set ConnA=server.createobject("ADODB.connection")
+ConnA.Connectionstring=sMDBS
+ConnA.open
+End Sub
+
+Sub CloseDBA()
+on error resume next
+ConnA.close
+Set ConnA=Nothing
+on error goto 0
+End Sub
+%> 
+
+
+
+
+
+
+

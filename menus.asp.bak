@@ -1,0 +1,69 @@
+<!--#include virtual="/header.htm" -->
+<% 
+'declare the variables 
+Dim Connection
+Dim ConnectionString
+Dim Recordset
+Dim SQL
+
+'declare the SQL statement that will query the database
+SQL = "SELECT * FROM Menus"
+
+'define the connection string, specify database driver
+'ConnString = "DRIVER={MySQL ODBC 5.1 Driver}; SERVER=E6520_DEV; DATABASE=antidote; Port=3306;UID=antidote;PASSWORD=antidote; OPTION=3"
+ConnString = "Driver={MySQL ODBC 3.51 Driver}; Server=127.0.0.1;Port=3306;Database=antidote;User=antidote;Password=antidote;Option=3;"
+'ConnString = "Driver={MySQL ODBC 5.3 Driver};Server=localhost;Database=antidote;User=antidote;Password=antidote;Option=3"
+'create an instance of the ADO connection and recordset objects
+response.write ConnString
+Set Connection = Server.CreateObject("ADODB.Connection")
+Set Recordset = Server.CreateObject("ADODB.Recordset")
+'Open the connection to the database
+Connection.Open ConnString
+
+'Open the recordset object executing the SQL statement and return records 
+Recordset.Open SQL,Connection
+
+'first of all determine whether there are any records 
+If Recordset.EOF Then 
+Response.Write("No records returned.") 
+Else 
+'if there are records then loop through the fields 
+Do While NOT Recordset.Eof   
+Response.write Recordset("title")&"<br>" 
+Response.write Recordset("subtitle")&"<br>" 
+Response.write Recordset("how_to")&"<br>" 
+Response.write Recordset("time_to_make")&"<br>" 
+Response.write "<br>"    &"<br>" 
+Recordset.MoveNext     
+Loop
+End If
+
+'close the connection and recordset objects freeing up resources
+Recordset.Close
+Set Recordset=nothing
+Connection.Close
+Set Connection=nothing
+%>
+
+
+<div class="recipies" >
+<h3>How to Grow Wheatgrass</h3><br>
+<div style="box-sizing: border-box;border-left:30;">
+	  	<p>Spend as little as $1 per week to grow your own wheatgrass juice at home. All you need is a wheatgrass juicer and growing supplies.&nbsp; Our goal at Antidote is to make following this lifestyle
+	  		 at home as easy as possible. Enquire instore.
+<h3>Growing Basics</h3>
+<ul>
+<li>Soak your hard winter wheat seed (also called wheat berries) overnight (8 to 12 hours).</li>
+<li>Sprout the seed in a jar for the next 16 to 24 hours, rinsing the seed well three times a day.</li>
+<li>After a very short “tail” is visible, plant the seed on top of the soil. Basic potting mix or topsoil will work fine. Peat moss is an important ingredient to look for in your soil so if you have to add it, the mix is one part peat moss to three parts soil, filled halfway up a two-inch deep tray.</li>
+<li>Water the tray and then cover the seeds to keep them from drying out for the first three days.</li>
+<li>During the first three days of growth, water once a day in the morning and really soak the soil (until the tray drips is a good sign you are watering enough). Then lightly mist your seed in the evening (lift cover off to mist seed).</li>
+<li>On the fourth day, uncover grass (roots should begin to take over your soil), water heavily once a day and keep the grass in the shade (never direct sunlight).</li>
+<li>For mold problems, increase your air circulation with a fan or air conditioning to keep the temperature between 60 and 80 degrees Fahrenheit (21° to 26° Celsius).</li>
+<li>Harvest grass when a second blade of grass appears on the grass blades, or when the grass “splits” toward the bottom of the blade. Average growing time is seven to 12 days, depending on the weather, but still always watch for the second blade of grass as you can never judge by how many days it has been growing or how tall the grass is.</li>
+<li>Only harvest once. Cut grass will store in the fridge for about seven to 10 days or longer in&nbsp;Green Bags. Then start the process all over again with new seeds and soil.</li>
+</ul>
+<h3>&nbsp;</h3>	  </div>
+</div>
+<div id="spacer" style="margin-top:20px;"></div>
+<!--#include virtual="/footer.asp" -->

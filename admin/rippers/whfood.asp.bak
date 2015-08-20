@@ -1,0 +1,263 @@
+<!-- #include virtual="/connection.asp"-->
+<!-- #include virtual="/functions.asp"-->
+<%
+
+'Make this page expire immediately
+Response.Expires = 0
+Response.Expiresabsolute = Now() - 1
+Response.AddHeader "pragma","no-cache"
+Response.AddHeader "cache-control","private"
+Response.CacheControl = "no-cache"
+             
+Const Request_POST = 1
+Const Request_GET = 2
+response.expires=0
+server.ScriptTimeout=10000
+Response.Buffer = true
+dim rsCheck
+dim rsDBID
+Set xobj = Server.CreateObject("MSXML2.ServerXMLHTTP")
+set rsCheck=Server.CreateObject("ADoDB.recordset")
+set rsDBID=Server.CreateObject("ADoDB.recordset")
+iQAdded=0
+sPos=""
+dim sPN(10)
+call OpenDB()
+'get the max King_id Ripped
+'x=openRS("P_Sel_KingIDMax ")
+'iStart=rstEMP(0)
+'x=closers()
+
+sSearchFor=""
+sSearchFor2=""
+sSearchFor="<title>"
+
+for i=1 to 200
+	sPage="http://www.whfoods.com/genpage.php?tname=foodspice&dbid=foodid"
+	sPage=replace(sPage,"&dbid=foodid","&dbid="&i)
+	X=rwb(sPage)
+	sPG=getPage(sPage)
+	if sPG="<h2>The Requested Document is Unavailable ()</h2>" then
+		x=rwb("Nothing for : "&i)
+	else
+		x=rwb("getting ... "&i)
+		x=getDataFood(sPG)
+	end if
+next
+'x=rwb(sPG)
+
+function getDataFood(sPageData)
+	'OK so the goal here is to get the data on each food item and then write that to the foods table
+	dim sDescTitle
+	dim sFoodName
+	dim sDescription
+	dim sVitaminsList
+	dim sImage
+	dim sTitle
+	dim sIntro
+	dim vitaminID(50)
+	dim vitaminName(50)
+	dim vitaminPercent(30)
+	sFind="<title>"
+	sFindEnd="</title>"
+	sTitle=fnFindText(sPageData,sFind,len(sFind),sFindEnd,0,"")
+	sFind="<img src="
+	sPageData=startFromText(sPageData,sFind,1)
+	sPageData=startFromText(sPageData,sFind,1)
+	sImage="http://www.whfoods.com/"
+	sPath=fnFindText(sPageData,sFind,len(sFind)+1,""" ",0,"")
+	sImage=sImage&sPath
+	sFind="<div style=""background:rgba(255,208,71,.7);margin:3px 0;padding:8px; font-size:3em;font-weight:bold"">"
+	sFinish="</div>"
+	sPageData=startFromText(sPageData,sFind,0)
+	sFoodName=fnFindText(sPageData,sFind,len(sFind),sFinish,0,"")
+	sPageData=startFromText(sPageData,sFoodName,1)
+	'food nutrution data
+	'intro.....
+	sFind="<p>"
+	sFinish="<br style=""clear:both"">"	
+	sPageData=startFromText(sPageData,sFind,0)
+	sIntro=fnFindText(sPageData,sFind,len(sFind),sFinish,0,"")
+	sPageData=startFromText(sPageData,sFoodName,1)
+	sPageData=startFromText(sPageData,sFinish,1)
+	'get Table of nutritional info table.
+	sPageData=startFromText(sPageData,"Nutrient</span>",1)
+	sPageData=startFromText(sPageData,sFinish,1)
+	'
+	sFind="genpage.php?tname=nutrient&amp;dbid="
+	sFinish=""">"	
+	'x=rwe(instr(sPg,sFind))
+	k=0
+	while instr(sPageData,sFind)<300 and instr(sPageData,sFind)>0
+		vitaminID(k)=fnFindText(sPageData,sFind,len(sFind),sFinish,0,"")
+		sPageData=startFromText(sPageData,sFind&vitaminID(k),1)
+		vitaminName(k)=fnFindText(sPageData,">",1,"</a>",0,"")
+		sPageData=startFromText(sPageData,"</a>",1)
+		vitaminPercent(k)=fnFindText(sPageData,""">",2,"</span>",0,"")		
+		'ok so time to write these into the vitamin table and food_vitamins table
+		k=k+1
+		sFind="genpage.php?tname=nutrient&amp;dbid="
+		x=rwb(instr(sPageData,sFind))
+	wend
+
+	sDecription=left(sPageData,instr(sPageData,"<div class=""slot-9"">")-15)
+	'sDecription=left(sDecription,len(sDecription)-12)		
+	'insert data into food table but check first food type does not exist
+	x=openRS("SELECT id_food FROM antidote.food where name='"&dbl_apos(sTitle)&"';")
+	if rsTemp.eof then
+		x=closeRS()
+		sSQL="INSERT INTO `antidote`.`food` (`name`,`Intro`,`Image_path`,`Image_local`,`Description`)"
+		sSQL=sSQL&"VALUES ('"&dbl_apos(sTitle)&"','"&dbl_apos(sIntro)&"','"&dbl_apos(sImage)&"','"&dbl_apos(sTitle)&"','"&dbl_apos(sDecription)&"');"
+		x=openRS(sSQL)
+		x=closeRS()
+		x=openRS("SELECT id_food FROM antidote.food where name='"&dbl_apos(sTitle)&"';")
+		iFoodID=rsTemp(0)
+	else
+		iFoodID=rsTemp(0)
+	end if
+	'iFoodID is the new or old ID
+	'now check for vitamins
+	'if no vitamin exist create vitamin else get the vitaminID and insert to the food vitamins table...
+	'check data is as expected only for Development
+	for i=1 to ubound(vitaminID)
+		x=openRS("SELECT id_vitamin FROM antidote.vitamins where name='"&dbl_apos(vitaminName(i))&"';")
+		if rsTemp.eof then
+			'vitamin 
+			sPageVit=getPage("http://www.whfoods.com/genpage.php?tname=nutrient&dbid="&dbl_apos(vitaminID(i))&"")
+			x=closeRS()
+			sDescription=fnFindText(sPageVit,"<table border=0>",0,"<div class=""slot-9"">",-15,"")
+			x=rwb(instr(sDescription,"<h2>"))
+			sBasicDescription=fnFindText(sDescription,"<h2>",0,"<h2",-3,"")
+			x=rwe(sBasicDescription)
+			sSQL="INSERT INTO `antidote`.`vitamins` (`name`,`whf_id`,`Overview`,`Full_Description`)"
+			sSQL=sSQL&"VALUES ('"&dbl_apos(vitaminName(i))&"','"&vitaminID(i)&"','"&dbl_apos(sBasicDescription)&"','"&dbl_apos(sDescription)&"');"
+			x=rwb(sSQL)
+			x=openRS(sSQL)
+			x=closeRS()
+			x=openRS("SELECT id_vitamin FROM antidote.vitamins where name='"&dbl_apos(vitaminName(i))&"';")
+			iVitID=rsTemp(0)
+		else
+			iVitID=rsTemp(0)
+		end if
+		x=closeRS()
+		'awesome now we have the vit_id and food_id so we can write to food_vitamins
+		x=openRS("SELECT id_food_vitaimns FROM antidote.food_vitaimns where id_food="&iFoodID&" and id_vitamin="&iVitID&";")
+		if rsTemp.eof then
+			x=closeRS()
+			sSQL="INSERT INTO `antidote`.`food_vitaimns` (`id_food`,`id_vitamin`,`percentage`)"
+			sSQL=sSQL&"VALUES ('"&iFoodID&"','"&iVitID&"','"&vitaminPercent(i)&"');"
+			x=openRS(sSQL)
+			x=closeRS()
+			x=openRS("SELECT id_food_vitaimns FROM antidote.food_vitaimns where id_food="&iFoodID&" and id_vitamin="&iVitID&";")
+			iFoodvit=rsTemp(0)
+		else
+			iFoodvit=rsTemp(0)
+		end if	
+		x=rwb("Nice one inserted new combo for For this food :"&iFoodID&", and Vit:"&iVitID&", Percentage RDI:"&vitaminPercent(i))
+	next
+
+	x=rwe(iFoodvit)
+
+	'check on error stop
+	
+	'now add vitamins
+	
+	'now add food_vitamins
+	
+	x=rwb(sTitle)
+	x=rwb(sImage)
+	x=rwb(sFoodName)
+	x=rwb(sIntro)
+	x=rwe(sDecription)
+end function
+
+function dbl_apos(txt)
+dbl_apos=replace(txt,"'","''")
+end function
+
+sPG=startFromText(sPG,"containerS",1)
+do until instr(sPg,"</table>")=0
+	sPG=startFromText(sPG,sSearchFor,0)
+	sLink=FnFindText(sPG,"<a href='>",len("<a href='>"),"'>",0,"")
+	sPage="http://www.offtek.co.uk/"&sLink
+	x=rwb(sPage)
+	xobj.Open "POST",sPage,false
+	xObj.send sPost
+	sPGSeries=xobj.responseText
+	sPGSeries=startFromText(sPGSeries,"containerS3T",1)
+	do until instr(sPGSeries,"</table>")=0
+		sSearchFor2="<a href='ram-memory"
+		sPGSeries=startFromText(sPGSeries,sSearchFor2,0)
+		'x=rwe(sPGSeries)
+		sLink=FnFindText(sPGSeries,"<a href='>",len("<a href='>"),"'>",0,"")
+		x=rwb("http://www.offtek.co.uk/"&sLink)
+		sPage="http://www.offtek.co.uk/"&sLink
+		xobj.Open "POST",sPage,false
+		xObj.send sPost
+		sPGRam=xobj.responseText
+		sPGRam=startFromText(sPGRam,"System Specifications",1)
+		StandardMem=FnFindText(sPGRam,"Standard Memory",len("Standard Memory"),"</tr>",0,"")
+		StandardMem=stripHTML(StandardMem)
+		StandardMem=replace(StandardMem,"...what's this?","")
+		x=rwb(StandardMem)
+		sPGRam=startFromText(sPGRam,"Maximum Memory",0)
+		'x=rwe(sPGRam)
+		MaxMem=FnFindText(sPGRam,"Maximum Memory",len("Maximum Memory"),"</tr>",0,"")
+		MaxMem=stripHTML(MaxMem)
+		MaxMem=replace(MaxMem,"...what's this?","")
+		x=rwb(MaxMem)
+		sPGRam=startFromText(sPGRam,"Number of Slots",0)
+		Slots=FnFindText(sPGRam,"Number of Slots",len("Number of Slots"),"</tr>",0,"")
+		Slots=stripHTML(Slots)
+		Slots=replace(Slots,"...what's this?","")
+		x=rwb(Slots)
+		sPGRam=startFromText(sPGRam,"Notes",0)
+		Notes=FnFindText(sPGRam,"Notes",len("Notes"),"</tr>",0,"")
+		Notes=stripHTML(Notes)
+		Notes=replace(Notes,"...what's this?","")
+		'x=rwe(Notes)
+		sPGRam=startFromText(sPGRam,"Module Size",1)
+		sPGRam=startFromText(sPGRam,"</tr>",1)
+		sTable=left(sPGRam,instr(sPGRam,"</table>"))
+		i=0
+		do until instr(sTable,"<tr")=0
+			'get module size
+			Module(i)=FnFindText(sTable,"<td",0,"</td>",0,"")
+			Module(i)=stripHTML(Module(i))
+			x=rwb(Module(i))
+			sTable=startFromText(sTable,"</td>",1)
+			'get module code
+			ModuleCode(i)=FnFindText(sTable,"<td",0,"</td>",0,"")
+			ModuleCode(i)=stripHTML(ModuleCode(i))
+			x=rwb(ModuleCode(i))
+			sTable=startFromText(sTable,"</td>",1)
+			'get module Manufacture code
+			ModuleManCode(i)=FnFindText(sTable,"<td",0,"</td>",0,"")
+			ModuleManCode(i)=stripHTML(ModuleManCode(i))
+			x=rwb(ModuleManCode(i))
+			sTable=startFromText(sTable,"</td>",1)
+			'get module Spec code
+			ModuleSpecs(i)=FnFindText(sTable,"<td",0,"</td>",0,"")
+			ModuleSpecs(i)=stripHTML(ModuleSpecs(i))
+			x=rwb(ModuleSpecs(i))
+			sTable=startFromText(sTable,"</td>",1)
+			'get module Spec code
+			ModuleBrands(i)=FnFindText(sTable,"<td",0,"</td>",0,"")
+			ModuleBrands(i)=stripHTML(ModuleBrands(i))
+			x=rwb(ModuleBrands(i))			
+			i=i+1
+			sTable=startFromText(sTable,"</tr>",1)			
+		loop
+		x=rwe("Rip complete enter data.... for "&sPage)
+	loop
+loop
+x=rwe("Rip complete enter data....")
+sPg="<table><tr><td>"&sPG&"</table>"
+sIns="P_Ins_KingstonData "&iKingID&",'"&removeCR(sHeader)&"','"&removeCR(sRamSizes)&"','"&removeCR(sMaxMem)&"',"&iSockets&",'','"&removeCR(sPg)&"'"
+'response.write sIns
+iAdded=iAdded+1
+conn.execute(sIns)
+response.write "Total compatible models added:"&iAdded&"<br>"
+'response.end
+Call CloseDB()
+%>

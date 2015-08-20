@@ -1,0 +1,25 @@
+<?php
+
+$new_file = img_resize("./img/", "test.jpg","copy_test.jpg",300);
+echo "<IMG src = '$new_file'>";
+
+function img_resize($path,$tmp_name,$new_name,$new_width){
+    if (!file_exists($path.$filename)){
+        echo "file not found!";
+        exit;
+    }
+    if (!is_writable($path)){
+        echo "error:permission denied!";
+        exit;
+    }
+    list($width, $height) = getimagesize($path . $tmp_name);
+    $new_height = abs($new_width * $height / $width); 
+    $image_p = imagecreatetruecolor($new_width, $new_height);
+    $image = imagecreatefromjpeg($path . $tmp_name); 
+    imagecopyresampled($image_p, $image, 0, 0, 0, 0,
+                        $new_width, $new_height, $width, $height); 
+    imagejpeg($image_p, $path . $new_name); 
+    return $path.$new_name;
+}
+
+?>

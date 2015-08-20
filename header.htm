@@ -1,0 +1,256 @@
+<%sScriptName=Request.ServerVariables ("SCRIPT_NAME")
+do until instr(sScriptName,"/")=0
+	sScriptName=right(sScriptName,len(sScriptName)-instr(sScriptName,"/"))
+loop
+sScriptName=ucase(sScriptName)
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Antidote Juice Bar</title>
+<meta name='description' content='Vegetarian Friendly, Serves organic healthy fresh salads, fresh juices, fresh almond milk, a calm &amp; fresh Atmosphere.' />
+<meta name='keywords' content='Antidote, Antidote New Brighton, vegetarian, veggie, vegan, healthy food, salads, healthy drinks, fresh food, fresh juice, organic, veggies, christchurch vegetarian, new zealand vegetarian, lebanese, raw food, whole food, authentic food, salad wraps, pure waters' />
+<meta property='og:site_name' content='Antidote Juice Bar' />
+<meta property='og:title' content='Antidote Juice Bar' />
+<meta property='og:description' content='Vegetarian Friendly, Serves organic healthy fresh salads, fresh juices, fresh almond milk, a calm &amp; fresh Atmosphere.' />
+<meta property='og:image' content='/images/antidote_logo_new.png' />
+<meta property='og:image' content='/images/beetroot_juice.jpg' />
+<meta property='og:image' content='/images/banana_shake.jpg' />
+<meta property='og:image' content='/images/wheat_grass.jpg' />
+<meta property='og:image' content='/images/watermelon-and-feta-salad.jpg' />
+<meta property='og:image' content='/images/Pear-spinich-blue.jpg' />
+<meta property='og:image' content='/images/cobb_salad.jpg' />
+<meta property='og:url' content='/' />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel='stylesheet' type='text/css' href='/files/css/fancybox.css' />
+<link rel='stylesheet' type='text/css' href='/files/css/main_style.css' title='wsite-theme-css' />
+<!-- jQuery library (served from Google) -->
+<script src="/files/js/jquery-2.1.4.min.js"></script>
+<!-- Latest compiled and minified CSS for Bootsrap-->
+<link rel="stylesheet" href="/files/bootstrap-3.3.4/css/bootstrap.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="/files/bootstrap-3.3.4/css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="/files/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+<!-- bxSlider Javascript file -->
+<script src="/files/js/jquery.bxslider.min.js"></script>
+<!-- bxSlider CSS file -->
+<link href="/files/css/jquery.bxslider.css" rel="stylesheet" />
+<link href="/files/css/gh-buttons.css" rel="stylesheet" />
+<style>
+.thumb-wrapper {position:relative;}
+.thumb-wrapper span {position:absolute;top: 0px;left: 0px;width: 100%;height: 100%;z-index: 100;background: transparent url(/images/whitecam.png) no-repeat;}
+/* ADDED for centering navbar items */
+.navbar .inner-nav ul {position:relative;left:50%;float:left;margin-right:0;margin-left:0;}
+/* ADDED for centering navbar items */.navbar .inner-nav li {position:relative;right:50%;float:left;margin:0;list-style:none}
+</style>
+<style>
+/* latin-ext */
+@font-face {  font-family: 'Anton';  font-style: normal;  font-weight: 400;  src: local('Anton'), url(http://fonts.gstatic.com/s/anton/v6/KgPSGrLwjoSLN4ZBWvXSfQ.woff2) format('woff2');  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;}
+/* latin */
+@font-face {  font-family: 'Anton';  font-style: normal;  font-weight: 400;  src: local('Anton'), url(http://fonts.gstatic.com/s/anton/v6/o-91-t7-bPc7W26HmS2N4Q.woff2) format('woff2');  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;}
+</style>
+
+<%if sScriptName="ADD_RECIPE.ASP" or  sScriptName="ADD_FOOD.ASP" or sScriptName="MY_HOME.ASP" then%>
+<!--file uploader-->
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="/files/plupload-2.1.7/js/jquery.ui.plupload/css/jquery.ui.plupload.css" type="text/css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<!-- production -->
+<script type="text/javascript" src="/files/plupload-2.1.7/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/files/plupload-2.1.7/js/jquery.ui.plupload/jquery.ui.plupload.js"></script>
+<!--RTE rich text editor-->
+<link rel='stylesheet' type='text/css' href='/files/jQuery-TE_v.1.4.0/jquery-te-1.4.0.css' />
+<script src="/files/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js"></script>
+<script type="text/javascript" src="/files/jquery.bpopup.min.js"></script>
+<script type="text/javascript" src="/files/plupload-2.1.7/js/upload.js"></script>
+<script type="text/javascript" src="/files/js/jquery.youtubepopup.min.js"></script>
+<script type="text/javascript">
+        $(function () {
+            $("a.youtube").YouTubePopup({ autoplay: 0 });
+        });
+</script>
+<script type="text/javascript">
+
+function updatePhoto() {
+//UPDATE PHOTO so load a popup with image uploader in it.
+$('#popup').bPopup();}
+//$(".editor").jqte({change: function(){ alert("The editor is changed"); }});
+	function Save_Form()
+	{//alert("Saving "+uid);
+	//go through form and update items, build string to save
+	sURL="/admin/ajax/save.asp"
+	//?t=people&uid="+uid+"&name="+$("#name").val()+"&email="+$("#email").val()+"&password="+$("#password").val()+"&about_me="+$("#about_me").val()
+	//alert(sURL);
+	 $.post(sURL, $("#myform").serialize(),function(data, status)
+	 {//update url for people pic on client side
+	 	alert("This has been saved!")
+	 })
+	 .fail(function() {
+	    alert(data); // or whatever
+	});
+	}						
+</script>
+
+<script type="text/javascript">
+
+function Delete_Record(t,d,l)
+{
+sURL="/admin/ajax/delete.asp?d="+d+"&t="+t
+//alert(sURL);
+ $.get(sURL, function(data, status){
+	alert(data);
+	window.location.replace(l);
+	})
+}
+</script>
+
+
+<%END IF%>
+<%if sScriptName="MY_HOME.ASP" then%>
+<script type="text/javascript" src="/files/plupload-2.1.7/js/upload_people.js"></script>
+<%END IF%>
+<%if sScriptName="ADD_RECIPE.ASP" then%>
+<script type="text/javascript" src="/files/plupload-2.1.7/js/upload.js"></script>
+<script type="text/javascript">
+function Add_Ingredient(iR) {
+//send food id + qty to form
+//alert($("#ingredients_list").html());
+if ($("#ingredients_list").html()=="Add from list above")
+	{	
+		$("#ingredients_list").html("")
+	}
+sURL="/admin/ajax/add_Recipe_item.asp?idf="+$("#food_add").val()+"&qty="+$("#food_amount").val()+"&idp=<%=session("id_people")%>"+"&idr="+iR
+//alert(sURL);
+ $.get(sURL, function(data, status){
+ 	sIngredients=$("#ingredients_list").html();
+	sIngredients=sIngredients+data;
+	$("#ingredients_list").html(sIngredients);
+    }).fail(function() {
+    alert('error please login again.'); // or whatever
+});
+}
+function Delete_Ingredient(d)
+{
+sURL="/admin/ajax/add_Recipe_item.asp?d="+d
+//alert(sURL);
+ $.get(sURL, function(data, status){
+	$("#ingredient"+d).hide()
+	})
+
+}
+
+//alert (response);
+//send off ingredients to add_Recipe_item.asp
+</script>
+<%END IF%>
+<%if sScriptName="ADD_FOOD.ASP" then%>
+<script type="text/javascript" src="/files/plupload-2.1.7/js/upload.js"></script>
+<script type="text/javascript">
+function Add_Vitamin() {
+//send food id + qty to form
+//alert($("#ingredients_list").html());
+if ($("#ingredients_list").html()=="Add from list above")
+	{	
+		$("#ingredients_list").html("")
+	}
+sURL="/admin/ajax/add_food_item.asp?idf="+$("#idf").val()+"&percentage="+$("#percentage").val()+"&idp=<%=session("id_people")%>"+"&vitamin="+$("#vitamin").val()
+//alert(sURL);
+ $.get(sURL, function(data, status){
+ 	sIngredients=$("#ingredients_list").html();
+	sIngredients=sIngredients+data;
+	$("#ingredients_list").html(sIngredients);
+    }).fail(function() {
+    alert('error please login again.'); // or whatever
+});
+}
+function Delete_food_vit(d)
+{
+sURL="/admin/ajax/add_food_item.asp?d="+d
+//alert(sURL);
+ $.get(sURL, function(data, status){
+	$("#vitamin"+d).hide()
+	})
+
+}
+//alert (response);
+//send off ingredients to add_Recipe_item.asp
+</script>
+<%END IF%>
+<%if sScriptName="CONTACT.ASP" then%>
+<style>#map-canvas {width: 800px;height: 600px;}</style>
+<script src="/files/google_map_api.js"></script>
+<script>
+function initialize() {
+  var mapCanvas = document.getElementById('map-canvas');
+  var mapOptions = {
+    center: new google.maps.LatLng(-43.5070854,172.72844),
+    zoom: 17,
+    mapTypeId: google.maps.MapTypeId.HYBRID
+  }
+  var map = new google.maps.Map(mapCanvas, mapOptions)
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<%END IF%>
+</head>
+<body class=''>
+
+<div id="header-wrap">
+	<div class="row row-centered" style="height:150px">
+			<div class="col-xs-6 ">
+				<span class='wsite-logo'><a href='/'><img class="img-responsive center-block" src='/images/antidote_logo_300.png' />
+			</div>	
+			<div class="col-xs-6 ">
+					<div class="row row-centered">
+						<%if session("id_people")="" then%>
+						<div class="col-xs-12">
+							<a href="/login.asp" style="margin-right:50px;">Login</a>
+							<a href="/register.asp">Register</a>
+						</div>
+						<%else%>
+						<div class="col-xs-12">
+							<a href="/my_home.asp" style="margin-right:50px;">My&nbsp;Options</a>
+							<a href="/logout.asp">Logout</a>
+						</div>								
+						<%end if%>
+					</div>
+					<div style="text-align:left;width:200px">
+						<div style="height:0px;overflow:hidden"></div>
+							<span class="wsite-social wsite-social-default">
+								<a class='wsite-social-item wsite-social-facebook' href='https://www.facebook.com/brightons.antidote' target='_blank'><span class='wsite-social-item-inner'></span></a>
+								<a class='wsite-social-item wsite-social-twitter' href='http://twitter.com/antidotenz' target='_blank'><span class='wsite-social-item-inner'></span></a>
+								<a class='wsite-social-item wsite-social-mail' href='mailto:hello@antidote.org.nz' target='_blank'><span class='wsite-social-item-inner'></span></a>
+								<a class='wsite-social-item wsite-social-plus' href='https://plus.google.com/antidotenz/' target='_blank'><span class='wsite-social-item-inner'></span></a>
+								<a class='wsite-social-item wsite-social-pinterest' href='https://www.pinterest.com/antidote0808/pins' target='_blank'><span class='wsite-social-item-inner'></span></a>
+							</span>
+							<div style="height:0px;overflow:hidden"></div>
+					</div>
+			</div>											
+
+	</div>
+</div>
+<div class="navbar" id="topnav">                
+	<div class="container">
+		<div class="col-xs-12 inner-nav">
+			<ul class="nav navbar-nav">
+				<li id="home"><a href="/default.asp">Home</a></li>
+				<li id="about"><a href="/about.asp">About</a></li>
+				<li id="events"><a href="/events.asp">Events</a></li>
+				<li id="spaces"><a href="/spaces.asp">Spaces</a></li>
+				<li id="recipes"><a href="/recipes.asp">Recipes</a></li>
+				<li id="foods"><a href="/foods.asp">foods</a></li>
+				<li id="people"><a href="/people.asp">People</a></li>
+				<li id="contact"><a href="/contact.asp">Contact</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="main-wrap">
+	<div id="page">
+		<div id="main">
+			
+
+			

@@ -1,0 +1,77 @@
+<!--#include virtual="/header.htm" -->
+<!-- #include virtual="/connection.asp"-->
+<!-- #include virtual="/functions.asp"-->
+<script type="text/javascript">
+function showfoods(idv)
+{$("#vitFoods"+idv).toggle(300);
+$("#butt"+idv).toggleClass("arrowdown arrowup");}
+</script>
+<style>
+	.graph{background-color:#63a504;color:#fff}
+</style>
+<div class="foods" >
+	<h1>Vitamins</h1><br>
+	<div class="row">
+		<div class="col-md-12">
+		  	<h3>What are vitamins and why are they important? </h3>
+		 </div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+		
+		</div>
+	</div>
+			
+<% 
+sSQL = "SELECT * FROM vitamins"
+x=openRS(sSQL)
+irow=0
+do until rsTemp.eof
+if irow mod 2=1 then strClass="light_blue_row" else strClass="white_row"
+irow=irow+1
+'sSQL="Update food set intro='"&stripHTML(replace(rsTemp("Intro"),"'","''"))&"' where id_food='"&rsTemp("id_food")&"'"
+'x=rwb(sSQL)
+'x=openRSA(sSQL)
+'x=rwe("here.")
+%>
+	<div class="row <%=strClass%>">
+		<div class="col-md-12 col-sm-12">
+			<a href="http://www.whfoods.com/genpage.php?tname=nutrient&dbid=<%=rsTemp("whf_id")%>"><h2><%=rsTemp("name")%></h2></a><%=replace(left(rsTemp("overview"),instr(instr(rsTemp("overview"),"<p>")+2,rsTemp("overview"),"<p>")-1),"<h2 id=""nutrientdescr"">Basic Description</h2>","") %>
+			<button id="butt<%=rsTemp("id_vitamin")%>" class="button icon arrowdown" onclick="showfoods(<%=rsTemp("id_vitamin")%>);">Show foods</button>
+		</div>
+	</div>
+	<div id="vitFoods<%=rsTemp("id_vitamin")%>" style="display:none;">
+<div class="row">
+		<div class="col-xs-12">
+		<b>Foods with most <%=rsTemp("name")%> per 100 grams (Ordered by % of Daily Recommended Intake)</b> 
+		</div>
+</div>
+<%
+	'get the top 3 foods for each vitmain
+	x=openRSA("Select  f.id_food,f.name,f.wh_id ,fv.percentage/grams_default*100 'DRI_100' from food_vitamins fv inner join food f on f.id_food=fv.id_food where fv.id_vitamin="&rsTemp("id_vitamin")&" Order by DRI_100 desc limit 20;")
+	if not rsTempA.eof then iMax=cint(rsTempA("DRI_100"))
+	do until rsTempA.eof
+		percent=round((cint(rsTempA("DRI_100"))/iMax)*100,0)
+		%>
+	<div class="row">
+		<div class="col-xs-3">
+			<a href="/food.asp?f=<%=rsTempA("id_food")%>"><%=rsTempA("name")&"</br>"%></a>
+		</div>
+		<div class="col-xs-9">
+			<span class="graph" style="width:<%=percent%>%;float: left;text-indent:20px;"><b><%x=rw(round(rsTempA("DRI_100"),0)&"</br>")%></b></span>
+		</div>
+	</div>
+	<%
+		rsTempA.movenext
+	loop
+	%>
+	</div>
+	<%
+	x=closeRSA()
+	rsTemp.movenext
+loop
+%>
+		</div>
+</div>
+<div id="spacer" style="margin-top:20px;"></div>
+<!--#include virtual="/footer.asp" -->
