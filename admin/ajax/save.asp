@@ -27,7 +27,7 @@ if request("t")="recipe" then
 	if request("show_on_web")="on" then bWeb="1"
 	if request("authorized")="on" then bAuth="1"
 	sSQL=""
-	sSQL="UPDATE `antidote`.`recipes` SET name ='"&replace(request("name"),"'","''")&"',id_type = '"&request("type")&"',how_to_make = '"&replace(request("makeit"),"'","''")&"',show_on_web="&bWeb&",authorized="&bAuth&",temp=0,servings='"&request("servings")&"',brief='"&replace(request("brief"),"'","''")&"'  WHERE uid_recipe = '"&request("uid")&"';"
+	sSQL="UPDATE `antidote`.`recipes` SET name ='"&replace(request("name"),"'","''")&"',id_type = '"&request("type")&"',how_to_make = '"&replace(request("makeit"),"'","''")&"',show_on_web="&bWeb&",authorized="&bAuth&",temp=0,servings='"&request("servings")&"',brief='"&left(replace(request("brief"),"'","''"),200)&"'  WHERE uid_recipe = '"&request("uid")&"';"
 	ax=rwb(sSQL)
 	x=openRS(sSQL)
 	x=closeRS()

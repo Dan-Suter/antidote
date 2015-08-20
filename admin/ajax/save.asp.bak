@@ -49,7 +49,7 @@ if request("t")="food" then
 	if request("authorized")="on" then bAuth="1"
 	sSQL=""
 	sSQL="UPDATE `antidote`.`food` SET name ='"&replace(request("name"),"'","''")&"',Intro = '"&replace(request("Intro"),"'","''")&"',Description='"&replace(request("Description"),"'","''")&"',wh_id="&wh_id&",visible="&bWeb&",default_unit='',grams_default=grams_default,id_person_add="&session("id_people")&" WHERE uid_food = '"&request("uid")&"';"
-	x=rwe(sSQL)
+	'x=rwe(sSQL)
 	x=openRS(sSQL)
 	x=closeRS()
 	x=rwb("Updated!")
