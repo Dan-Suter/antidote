@@ -45,7 +45,7 @@ x=openRS(sSQL)
 		id_recipe=rsTemp("id_recipe")
 		id_person=rsTemp("id_person")
 		name=rsTemp("name")
-		image=replace(rsTemp("image"),"med","small")
+		image=replace(rsTemp("image"),"med","med")
 		how_to_make=rsTemp("how_to_make")
 		id_type=rsTemp("id_type")
 		servings=rsTemp("servings")
@@ -69,7 +69,7 @@ x=openRS(sSQL)
 		<%bNewRow=false
 		end if%>
 			
-		<div class="col-med-2 col-sm-2 col-xs-2" >
+		<div class="col-med-2 col-sm-3 col-xs-4" >
 		<div style="width:150px;"><small><a  href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></small></div>
 			<a href="/recipe.asp?r=<%=id_recipe%>"><img src="<%=image%>" alt="<%=rsTemp("name")%>"></a>
 		</div>

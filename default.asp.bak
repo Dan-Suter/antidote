@@ -69,7 +69,7 @@ x=openRS(sSQL)
 		<%bNewRow=false
 		end if%>
 			
-		<div class="col-med-2 col-sm-2 col-xs-3" >
+		<div class="col-med-2 col-sm-3 col-xs-4" >
 		<div style="width:150px;"><small><a  href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></small></div>
 			<a href="/recipe.asp?r=<%=id_recipe%>"><img src="<%=image%>" alt="<%=rsTemp("name")%>"></a>
 		</div>
