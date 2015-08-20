@@ -12,17 +12,11 @@
 					</p>
 				</div>
 			</div>
-
-			<%if session("name")="" then %>
-
-			<%else %>	
-			<div class="foods container-fluid" >
-				<div class="row">
-					<div class="col-sm-12">
-					  	<h1>Hey <%=session("name") %>, what would you like to eat?</h1>
-					 </div>
-				</div>
-			<%end if %>	
+			<div class="row">
+				<div class="col-xs-12" style="backgroud-color:#ddd">
+						<b>filters</b>
+				 </div>
+			</div>
 	<% 
 
 'check to see if id is stated?
@@ -69,7 +63,7 @@ x=openRS(sSQL)
 		<%bNewRow=false
 		end if%>
 			
-		<div class="col-med-2 col-sm-3 col-xs-4" >
+		<div class="col-med-2 col-sm-4 col-xs-12" >
 		<div style="width:150px;"><small><a  href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></small></div>
 			<a href="/recipe.asp?r=<%=id_recipe%>"><img src="<%=image%>" alt="<%=rsTemp("name")%>"></a>
 		</div>
