@@ -3,12 +3,7 @@
 <!-- #include virtual="/functions.asp"-->
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <div class="foods" >
-	<h3</h3><br>
-	<div class="row">
-		<div class="col-sm-12">
-		  	<h1>Anitdote Recipes.</h3>
-		 </div>
-	</div>	
+
 <% 
 
 
@@ -88,7 +83,7 @@ do until rsTemp.eof
 	%>
 		<div class="row">
 			<div class="col-sm-10 col-xs-10">
-				<h2 style="margin-top:-15px;"><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h2>
+				<h1><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h1>
 			</div>
 			<%if session("id_person")=id_person or session("can_authorize") then%>
 			<div class="col-sm-2 col-xs-2">
@@ -97,13 +92,13 @@ do until rsTemp.eof
 			<%end if%>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 col-xs-12">
+			<div class="col-sm-7 col-xs-12">
 				<img src="<%=image%>" alt="name">
 			</div>
-			<div class="col-sm-6 col-xs-12">
+			<div class="col-sm-5 col-xs-12">
 				<div class="row">
 			        <div class="col-xs-12 col-sm-12" >
-			          <b><%=rsTemp("brief")%></b>
+			          <h2><%=rsTemp("brief")%></h2>
 			        </div>
 				</div>
 
@@ -135,7 +130,8 @@ do until rsTemp.eof
 		</div>
 		<div class="row">
 			<div class="col-sm-6 col-xs-12">
-				<%=how_to_make%>
+				<h3>How to make this recipie.</h3>
+				<p><%=how_to_make%></p>
 			</div>
 		</div>
 		<div class="row">			 

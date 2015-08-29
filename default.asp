@@ -64,7 +64,7 @@ x=openRS(sSQL)
 		end if%>
 			
 		<div class="col-med-2 col-sm-4 col-xs-12" >
-		<div style="width:150px;"><small><a  href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></small></div>
+		<div style="width:auto;padding-top:5px;padding-bottom:5px;max-height:30px;"><small><a  href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></small></div>
 			<a href="/recipe.asp?r=<%=id_recipe%>"><img src="<%=image%>" alt="<%=rsTemp("name")%>"></a>
 		</div>
 		<%rsTemp.movenext
