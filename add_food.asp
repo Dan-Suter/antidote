@@ -4,7 +4,7 @@
 <!--#include virtual="/security.asp" -->
 			<%
 			
-			'check to see if user chosen to add a recipie of edit one?
+			'check to see if user chosen to add a recipe of edit one?
 			if request("id")<>"" then
 				id_food=request("id")
 			else

@@ -130,7 +130,7 @@ do until rsTemp.eof
 		</div>
 		<div class="row">
 			<div class="col-sm-6 col-xs-12">
-				<h3>How to make this recipie.</h3>
+				<h3>How to make this recipe.</h3>
 				<p><%=how_to_make%></p>
 			</div>
 		</div>

@@ -2,7 +2,7 @@
 <!--#include virtual="/functions.asp" -->
 <!--#include virtual="/connection.asp" -->
 <!--#include virtual="/security.asp" -->
-			<%'check to see if user has an active open recipie
+			<%'check to see if user has an active open recipe
 			if request("id")<>"" then
 				sSQL="SELECT * FROM antidote.recipes where id_recipe="&request("id")&";"
 			else
@@ -63,7 +63,7 @@
 		    </div>
 			<div class="row row-centered">
 		        <div class="col-md-3 indent10" >
-		          Recipie Picture
+		          recipe Picture
 		        </div>
 		        <div class="col-md-9">
 
@@ -165,13 +165,18 @@
 		    	<div class="col-md-8">
 		    		<input type="checkbox" name="show_on_web" id="show_on_web" checked="<%=bwebCheck%>"> <label for="show_on_web">Show this recipe to the live website.</label></br>
 		           <%if session("can_authorize")=true then%>
-		           <input type="checkbox" name="authorized" id="authorized" checked="<%=bauthCheck%>"> <label for="authorized">Authorize this recipie.</label>
+		           <input type="checkbox" name="authorized" id="authorized" checked="<%=bauthCheck%>"> <label for="authorized">Authorize this recipe.</label>
 		           <%end if%>
 		      </div>
 		    </div>			
 		    <div class="row row-centered" style="text-align:center">
-		    	<div class="col-md-12">
-		           <imput type="button"  class="button" onclick="Save_Form(); return false;">Save Changes</button>
+				<div class="col-xs-5">
+		      	</div>
+		    	<div class="col-xs-4 text-left">
+		           <button  class="button" onclick="Save_Form(); return false;">Save Changes</button>
+		      	</div>
+		    	<div class="col-xs-3 text-left">
+		           <button  class="button danger icon remove" onclick="Delete_Record('recipe','<%=uid_recipe%>','/recipes.asp'); return false;">Delete Record</button>
 		      </div>
 		    </div>
 		</form>
