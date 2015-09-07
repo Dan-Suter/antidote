@@ -37,7 +37,10 @@ do until rsTemp.eof
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
          ['Nutrient','Link','% of RDI click bar to see more',{ role: 'style' }, { role: 'annotation' }],
-   <%x=openRSA("CALL `antidote`.`Recipe_Vitamins`("&id_recipe&");")
+   <%
+   x=openRSA("CALL `antidote`.`Recipe_Vitamins_cache`("&id_recipe&");")
+   x=closeRSA()
+   x=openRSA("CALL `antidote`.`Recipe_Vitamins`("&id_recipe&");")
 		do until rsTempA.eof
 			sArray=sArray&"['"&rstempA(1)&"','/vitamin.asp?v="&rstempA(0)&"',"&round(rstempA(2),2)&",'"&rstempA(3)&"','This meal/drink has "&round(rstempA(2),2)&" of your RDI for "&rstempA(1)&"'],"&vbcrlf
 			rsTempA.movenext

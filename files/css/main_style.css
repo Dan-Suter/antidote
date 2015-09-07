@@ -1,3 +1,6 @@
+.small-graph-name{border-right:2px solid #000;padding-right: 5px;}
+.small-graph-line{border:1px solid #000;height: 17px;}
+div.small-graph-line:hover{ cursor: pointer; cursor: hand;}
 .bodyText {margin-left:20px;}
 .imgList{margin-left:-40px;}
 .pad5 {padding: 10px;}

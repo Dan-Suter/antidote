@@ -2,6 +2,7 @@
 <!--#include virtual="/functions.asp" -->
 <!--#include virtual="/connection.asp" -->
 <!--#include virtual="/security.asp" -->
+
 			<%'check to see if user has an active open recipe
 			if request("id")<>"" then
 				sSQL="SELECT * FROM antidote.recipes where id_recipe="&request("id")&";"

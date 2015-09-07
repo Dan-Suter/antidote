@@ -68,11 +68,11 @@ x=openRS(sSQL)
 	  	if sFoodType<>rsTemp("group_name") then sFoodType=rsTemp("group_name") 
 	  	%>
 		<div class="row">
-			<div class="col-sm-6 col-xs-6">
+			<div class="col-sm-10 col-xs-10">
 				<h3 style="margin-top:0px;"><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h3>
 			</div>
 			<%if session("can_authorize") then%>
-			<div class="col-sm-6 col-xs-6">
+			<div class="col-sm-2 col-xs-2">
 				<a class="button icon edit" href="/add_recipe.asp?id=<%=id_recipe%>">Edit</a>
 			</div>
 			<%end if%>
@@ -105,17 +105,27 @@ x=openRS(sSQL)
 			</div>		
 			<div class="col-md-4 col-sm-4 col-xs-12">
 				<div class="row">
-			        <div class="col-sm-12 col-xs-12 small">
-			         	<%=how_to_make%>
+			        <div class="col-sm-12 col-xs-12">
+			         	<table>
+			         	<%'Graph added 7/09/2015 Dan.
+			         	sSQL=""
+			         	sSQL="Call Get_recipe_cache ("&rsTemp("id_recipe")&");"
+			         	
+			         	x=openRSA(sSQL)
+			         	'x=rwe(sSQL)
+			         	do until rsTempA.eof
+			         		width=cint(rsTempA("RDI"))
+			         		if width>100 then width=100
+
+			         		x=rw("<tr><td align=""right"" class=""small-graph-name""><a href=""/vitamin.asp?v="&rsTempA("id_vitamin")&""">"&rsTempA("name")&"</a></td><td style=""width:100%""><a href=""/vitamin.asp?v="&rsTempA("id_vitamin")&"""><div class=""small-graph-line""  style=""width:"&width&"%;background-color:"&rsTempA("color")&""">&nbsp;</div></a></td></tr>")
+			         		rsTempA.movenext
+			         	loop
+			         	x=closeRSA()
+			         	%>
+			         </table>
 			        </div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
- 			<div class="col-sm-12 col-xs-12 small">
-			<button id="spn<%=id_recipe%>" class="button icon arrowdown" onclick="showMore(<%=id_recipe%>)">Show more.</button>
-			</div>
-		 
 		</div>
 	<%
 	rsTemp.movenext
@@ -124,20 +134,5 @@ x=closeRS()%>
 	</div>
 </div>
 <div id="spacer" style="margin-top:20px;"></div>
-<script type="text/javascript">
-function showMore(idv)
-{
-if ($("#spn"+idv).html()=="Show more."){
-$("#htm"+idv).css('height', 'auto');
-$("#htm"+idv).css('overflow', 'visible');
-$("#spn"+idv).html("Show less.");
-$("#spn"+idv).toggleClass("arrowdown arrowup");
-}
-else{
-$("#htm"+idv).css('height', '150px');
-$("#htm"+idv).css('overflow', 'hidden');
-$("#spn"+idv).html("Show more.");
-$("#spn"+idv).toggleClass("arrowup arrowdown");}	
-}
-</script>
+
 <!--#include virtual="/footer.asp" -->
