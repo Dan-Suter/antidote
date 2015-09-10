@@ -26,6 +26,8 @@
 			<input type="hidden" name="t" value="people">
 			<input type="hidden" id="uid" name="uid" value="<%=session("uid_people")%>">
 			<input type="hidden" id="file_name" name="file_name" value="<%=session("uid_people")%>.jpg">
+			<input type="hidden" name="folder_name" id="folder_name" value="people">
+			<input type="hidden" name="idp" id="idp" value="<%=id_people%>">
 			
 			<div class="row row-centered">
 				<div class="col-md-12">

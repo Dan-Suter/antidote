@@ -32,6 +32,9 @@
 				about_me=rsTemp("about_me")
 				id_people=rsTemp("id_people")
 				auto_login=rsTemp("auto_login")
+				if not CheckExistsFile(sFilePath&image_path) then
+					image_path="/images/people/small/generic_person.jpg"
+				end if
 				%>
 	 			<div id="htm<%=id_people%>" class="row row-centered " style="height:150px;overflow:hidden;">
 	        <div class="col-xs-2" style="">

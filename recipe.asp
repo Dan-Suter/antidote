@@ -145,7 +145,12 @@ do until rsTemp.eof
 				</div>
 			    <div id="chart_div" style="height:auto;"></div>
 		</div>
-	
+		<div class="row">
+			<div class="col-sm-12 col-xs-12" >
+				*Note above percentages are based on USDA Figures, effects of cooking and juicing will affect these figures, use as a guideline only. For slow juicing Typically 20-30 percent is lost and 80-90% of the fibre is lost.
+			</div>
+
+		</div>
 	<%
 	rsTemp.movenext
 loop

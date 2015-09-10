@@ -1,8 +1,12 @@
-<%sScriptName=Request.ServerVariables ("SCRIPT_NAME")
+<%
+dim sFilePath
+sFilePath="C:\inetpub\wwwroot\antidote"
+sScriptName=Request.ServerVariables ("SCRIPT_NAME")
 do until instr(sScriptName,"/")=0
 	sScriptName=right(sScriptName,len(sScriptName)-instr(sScriptName,"/"))
 loop
 sScriptName=ucase(sScriptName)
+
 %>
 
 <!DOCTYPE html>
@@ -110,7 +114,7 @@ sURL="/admin/ajax/delete.asp?d="+d+"&t="+t
 
 <%END IF%>
 <%if sScriptName="MY_HOME.ASP" then%>
-<script type="text/javascript" src="/files/plupload-2.1.7/js/upload_people.js"></script>
+<script type="text/javascript" src="/files/plupload-2.1.7/js/upload.js"></script>
 <%END IF%>
 <%if sScriptName="ADD_RECIPE.ASP" then%>
 <script type="text/javascript" src="/files/plupload-2.1.7/js/upload.js"></script>

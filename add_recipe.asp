@@ -42,31 +42,27 @@
 			<input type="hidden" name="file_name" id="file_name" value="<%=uid_recipe%>.jpg">
 			<input type="hidden" name="folder_name" id="folder_name" value="recipe">
 			<input type="hidden" name="idr" id="idr" value="<%=id_recipe%>">
-
-			<
 			<div class="row row-centered">
-				<div class="col-md-12">
+				<div class="col-xs-12">
 					<h3>Adding Recipe</h3>
 				</div>
 			</div>
- 			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+ 			<div class="row row-centered vcenter">
+		        <div class="col-xs-3 indent10" >
 		          Name it
 		        </div>
-		        <div class="col-md-5">
-					<input type="text" size="50" maxlength="100" name="name" value="<%=name%>">        
+		        <div class="col-xs-5">
+					<input type="text" size="40" maxlength="100" name="name" value="<%=name%>">        
 		        </div>
-		        <div class="col-md-4">
+		        <div class="col-xs-4">
 					<a class="button icon arrowright" href="/recipe.asp?r=<%=id_recipe%>">Preview on web<a>
 		        </div>
-
-
 		    </div>
 			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+		        <div class="col-xs-3 indent10" >
 		          recipe Picture
 		        </div>
-		        <div class="col-md-9">
+		        <div class="col-xs-9">
 
 				<%if isnull(image) or image="" then%>
 				<div>
@@ -85,10 +81,10 @@
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+		        <div class="col-xs-3 indent10" >
 		          Recipe Type
 		        </div>
-		        <div class="col-md-9">
+		        <div class="col-xs-9">
 				<select name="type"><option value="0">Select Type</option>
 						<%'enumerate foods list
 						x=openRS("Select * from Recipe_types order by name;")
@@ -106,10 +102,10 @@
 		    </div>
 
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+		        <div class="col-xs-3 indent10" >
 		          Add Ingredients
 		        </div>
-		        <div class="col-md-9">
+		        <div class="col-xs-9">
 					<input type="text" size="6" maxsize="5" id="food_amount" name="food_amount" value="100">
 					grams of 
 					<select id="food_add" name="food_add">
@@ -127,10 +123,10 @@
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+		        <div class="col-xs-3 indent10" >
 		          Ingredients
 		        </div>
-		        <div id="ingredients_list" class="col-md-9">
+		        <div id="ingredients_list" class="col-xs-9">
 		        	<%'check to see what ingredients are already added?'
 		        	x=openRS("call Recipes_By_ID ("&id_recipe&")")
 		        	if rsTemp.eof then
@@ -145,25 +141,25 @@
 		        </div>
 		    </div>
 			<div class="row row-centered">
-		        <div class="col-md-3 indent10" style="margin-top:20px;" >
+		        <div class="col-xs-3 indent10" style="margin-top:20px;" >
 		         	Brief Description
 		        </div>
-		        <div class="col-md-9">
+		        <div class="col-xs-9">
 						<textarea id="brief" name="brief" cols="100" rows="2" placeholder="Add a Breif Description of the recipe here.  This text will show on Menu page."><%=brief%></textarea>
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" style="margin-top:20px;" >
+		        <div class="col-xs-3 indent10" style="margin-top:20px;" >
 		         	How to Make it
 		        </div>
-		        <div class="col-md-9">
+		        <div class="col-xs-9">
 					<textarea id="makeit" name="makeit" class="editor"><%=how_to_make%></textarea>
 		        </div>
 		    </div>
 
  		    <div class="row " style="">
- 		    	<div class="col-md-4"></div>
-		    	<div class="col-md-8">
+ 		    	<div class="col-xs-4"></div>
+		    	<div class="col-xs-8">
 		    		<input type="checkbox" name="show_on_web" id="show_on_web" checked="<%=bwebCheck%>"> <label for="show_on_web">Show this recipe to the live website.</label></br>
 		           <%if session("can_authorize")=true then%>
 		           <input type="checkbox" name="authorized" id="authorized" checked="<%=bauthCheck%>"> <label for="authorized">Authorize this recipe.</label>
