@@ -4028,6 +4028,23 @@ end if
 set fso=nothing
 end function
 
+function ReNameFile(sFilePathtoRename,sNewFileNameLocation)
+dim fso
+Set fso = CreateObject("Scripting.FileSystemObject")
+if fso.FileExists(sFilePathtoRename) then
+	if not fso.FileExists(sNewFileNameLocation) then
+		fso.MoveFile sFilePathtoRename, sNewFileNameLocation
+		ReNameFile=sFilePathtoRename &" moved to "& sNewFileNameLocation
+	else
+		fso.DeleteFile sFilePathtoRename,1
+		ReNameFile=sNewFileNameLocation &" already exists "& sFilePathtoRename & "Deleted"
+	end if
+else
+	ReNameFile="No Update for "&sFilePathtoRename&": file not found"
+end if
+set fso=nothing
+end function
+
 function UploadTMImages(sPn)
 dim fs
 Set fs = CreateObject("Scripting.FileSystemObject")

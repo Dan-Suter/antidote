@@ -101,7 +101,7 @@ do until rsTemp.eof
 			<div class="col-sm-5 col-xs-12">
 				<div class="row">
 			        <div class="col-xs-12 col-sm-12" >
-			          <h2><%=rsTemp("brief")%></h2>
+			          <h4><%=rsTemp("brief")%></h4>
 			        </div>
 				</div>
 
@@ -132,7 +132,7 @@ do until rsTemp.eof
 			    </div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 col-xs-12">
+			<div class="col-sm-12 col-xs-12">
 				<h3>How to make this recipe.</h3>
 				<p><%=how_to_make%></p>
 			</div>

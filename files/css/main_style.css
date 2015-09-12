@@ -1,4 +1,20 @@
-
+.service-list {
+list-style-type: none;
+margin-left:0px;
+padding-left:0px;
+display: inline-block;
+}
+.service-list img
+{
+float:left;
+}
+.service-list p,h3 {
+text-align: left; 
+display:inline-block;
+padding: 0;
+}
+.table {padding:1px;}
+.graph{background-color:#63a504;color:#fff}
 #recipes-person-img{margin-right: 5px;}
 .small-graph-name{border-right:2px solid #000;padding-right: 5px; white-space: nowrap;}
 .small-graph-name a{ white-space: nowrap;}

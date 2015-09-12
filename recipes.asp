@@ -59,8 +59,7 @@ x=openRS(sSQL)
 		<%if sFoodType<>rsTemp("group_name") then%>
 		<div class="row">
 			<div class="col-xs-12">
-			  	
-			  	<h2>
+			  	<h2 style="">
 			  		<%=rsTemp("group_name")%>s
 			  	</h2>
 			  	
@@ -71,7 +70,7 @@ x=openRS(sSQL)
 	  	%>
 		<div class="row">
 			<div class="col-sm-10 col-xs-10">
-				<h3 style="margin-top:0px;"><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h3>
+				<h3 style=""><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h3>
 			</div>
 			<%if session("can_authorize") then%>
 			<div class="col-sm-2 col-xs-2">
@@ -93,7 +92,7 @@ x=openRS(sSQL)
 			        		x=rw("No Ingredients")
 			        	else
 			        		do until rsTempA.eof
-			        			x=rw("<li>"&rsTempA("qty_grams")&" grams of <a href=""/food.asp?f="&rsTempA("id_food")&""">"&rsTempA("name")&"</a></li>")
+			        			x=rw("<li style=""white-space:nowrap"">"&rsTempA("qty_grams")&" grams of <a href=""/food.asp?f="&rsTempA("id_food")&""">"&rsTempA("name")&"</a></li>")
 			        			rsTempA.movenext
 			        		loop
 			        	end if

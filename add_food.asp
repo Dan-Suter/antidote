@@ -46,12 +46,12 @@
 			<form  id="myform" name="myform" action="/admin/ajax/save.asp">
 			<input type="hidden" name="t" value="food">
 			<input type="hidden" name="uid" id="uid" value="<%=uid_food%>">
-			<input type="hidden" name="file_name" id="file_name" value="<%=name%>.jpg">
+			<input type="hidden" name="file_name" id="file_name" value="<%=uid_food%>.jpg">
 			<input type="hidden" name="folder_name" id="folder_name" value="food">
 			<input type="hidden" name="idf" id="idf" value="<%=id_food%>">
 			<div class="row row-centered">
 				<div class="col-md-12">
-					<h3>Adding Recipe</h3>
+					<h3>Adding Food</h3>
 				</div>
 			</div>
  			<div class="row row-centered">
