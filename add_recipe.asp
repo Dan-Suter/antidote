@@ -63,21 +63,11 @@
 		          recipe Picture
 		        </div>
 		        <div class="col-xs-9">
-
-				<%if isnull(image) or image="" then%>
-				<div>
-				<div id="uploader">
-					<p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
-				</div>
-				<br />
-				<%
-				else%>
 				<div class="thumb-wrapper">
 				<img id="update_img" src="<%=image%>" alt="<%=name%>" />
 				<span id="updatePhoto" onclick="updatePhoto();"></span>
 				<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
-				</div>
-				<%end if%>           
+				</div>          
 		        </div>
 		    </div>
  			<div class="row row-centered">
