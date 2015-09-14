@@ -1,7 +1,7 @@
 // Initialize the widget when the DOM is ready
-	if ($("#t").val()=="food") {varx=800;vary=600;};
-	if ($("#t").val()=="recipe") {varx=800;vary=600;};
-	if ($("#t").val()=="people") {varx=600;vary=800;};
+if ($("#t").val()=="food") {varx=800;vary=600;};
+if ($("#t").val()=="recipe") {varx=800;vary=600;};
+if ($("#t").val()=="people") {varx=600;vary=800;};
 $(function() {
 	$("#uploader").plupload({
 		// General settings
@@ -15,7 +15,7 @@ $(function() {
 		// Resize images on clientside if we can
 		resize : {
 			width : 800, 
-			height : 600, 
+			height : 800, 
 			quality : 100,
 			crop: true // crop to exact dimensions
 		},

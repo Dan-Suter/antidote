@@ -22,7 +22,7 @@
 			session("image_path")=rsTemp("image_path")
 			session("uid_people")=rsTemp("uid_people")
 			session("about_me")=rsTemp("about_me")
-			session("can_authorize")=rsTemp("can_authorize")
+			'session("can_authorize")=rsTemp("can_authorize")
 			if not request("r")="" then
 				response.redirect(request("r"))
 			else

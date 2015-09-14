@@ -19,10 +19,10 @@
 	</div>
 <%end if %>	
 
-<%if session("id_person")=id_person or session("can_authorize") then%>
+<%if session("can_authorize") then%>
 	<div class="row">
 			<div class="col-sm-12 col-xs-12">
-				<h3>Yay you are someone who can <a class="button icon edit" href="/add_recipe.asp">Add A Recipe</a></h3>
+				<h3><a class="button icon edit" href="/add_recipe.asp">Add A Recipe</a></h3>
 			</div>
 	</div>
 <%end if%>
@@ -53,12 +53,13 @@ x=openRS(sSQL)
 		id_type=rsTemp("id_type")
 		servings=rsTemp("servings")
 		uid_recipe=rsTemp("uid_recipe")
+		uid_recipe=rsTemp("uid_people")
+		person_name=rsTemp("person_name")
 		%>
 		<%if sFoodType<>rsTemp("group_name") then%>
 		<div class="row">
 			<div class="col-xs-12">
-			  	
-			  	<h2>
+			  	<h2 style="">
 			  		<%=rsTemp("group_name")%>s
 			  	</h2>
 			  	
@@ -68,16 +69,16 @@ x=openRS(sSQL)
 	  	if sFoodType<>rsTemp("group_name") then sFoodType=rsTemp("group_name") 
 	  	%>
 		<div class="row">
-			<div class="col-sm-6 col-xs-6">
-				<h3 style="margin-top:0px;"><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h3>
+			<div class="col-sm-10 col-xs-10">
+				<h3 style=""><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h3>
 			</div>
 			<%if session("can_authorize") then%>
-			<div class="col-sm-6 col-xs-6">
+			<div class="col-sm-2 col-xs-2">
 				<a class="button icon edit" href="/add_recipe.asp?id=<%=id_recipe%>">Edit</a>
 			</div>
 			<%end if%>
 		</div>
-		<div class="row" id="htm<%=id_recipe%>" style="height:188px;overflow:hidden;">
+		<div class="row" id="htm<%=id_recipe%>" style="height:auto;overflow:hidden;">
 			<div class="col-md-4 col-sm-4 col-xs-12">
 				<a href="/recipe.asp?r=<%=id_recipe%>"><img src="<%=rsTemp("image")%>" alt="<%=rsTemp("name")%>"></a>
 			</div>
@@ -91,31 +92,42 @@ x=openRS(sSQL)
 			        		x=rw("No Ingredients")
 			        	else
 			        		do until rsTempA.eof
-			        			x=rw("<li>"&rsTempA("qty_grams")&" grams of <a href=""/food.asp?f="&rsTempA("id_food")&""">"&rsTempA("name")&"</a></li>")
+			        			x=rw("<li style=""white-space:nowrap"">"&rsTempA("qty_grams")&" grams of <a href=""/food.asp?f="&rsTempA("id_food")&""">"&rsTempA("name")&"</a></li>")
 			        			rsTempA.movenext
 			        		loop
 			        	end if
 			        	x=closeRSA()
 			        	%>
+			        	<li><b>Serves <%=servings%></b></li>
 			        	</ul>
-			        	<div><b>Serves <%=servings%> people</b></div>
-			        	<a href="/recipe.asp?r=<%=id_recipe%>">View the nutritional content.</a>
+			        	<div><img id="recipes-person-img" src="/images/people/xsthumb/<%=rsTemp("uid_people")%>.jpg" alt="<%=rsTemp("person_name")%>"><b>Recipe by <%=rsTemp("person_name")%></b></div>
+			        	<div style="float:right;"></div>
 			        </div>
 			    </div>
 			</div>		
 			<div class="col-md-4 col-sm-4 col-xs-12">
 				<div class="row">
-			        <div class="col-sm-12 col-xs-12 small">
-			         	<%=how_to_make%>
+			        <div class="col-sm-12 col-xs-12">
+			         	<table>
+			         	<%'Graph added 7/09/2015 Dan.
+			         	sSQL=""
+			         	sSQL="Call Get_recipe_cache ("&rsTemp("id_recipe")&");"
+			         	
+			         	x=openRSA(sSQL)
+			         	'x=rwe(sSQL)
+			         	do until rsTempA.eof
+			         		width=cint(rsTempA("RDI"))
+			         		if width>100 then width=100
+
+			         		x=rw("<tr><td align=""right"" class=""small-graph-name""><a href=""/vitamin.asp?v="&rsTempA("id_vitamin")&""">"&rsTempA("name")&"</a></td><td style=""width:100%""><a title="""&rsTempA("RDI")&"% of your Recommended Daily Intake"" href=""/vitamin.asp?v="&rsTempA("id_vitamin")&"""><div class=""small-graph-line""  style=""width:"&width&"%;background-color:"&rsTempA("color")&""">&nbsp;</div></a></td></tr>")
+			         		rsTempA.movenext
+			         	loop
+			         	x=closeRSA()
+			         	%>
+			         </table>
 			        </div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
- 			<div class="col-sm-12 col-xs-12 small">
-			<button id="spn<%=id_recipe%>" class="button icon arrowdown" onclick="showMore(<%=id_recipe%>)">Show more.</button>
-			</div>
-		 
 		</div>
 	<%
 	rsTemp.movenext
@@ -124,20 +136,5 @@ x=closeRS()%>
 	</div>
 </div>
 <div id="spacer" style="margin-top:20px;"></div>
-<script type="text/javascript">
-function showMore(idv)
-{
-if ($("#spn"+idv).html()=="Show more."){
-$("#htm"+idv).css('height', 'auto');
-$("#htm"+idv).css('overflow', 'visible');
-$("#spn"+idv).html("Show less.");
-$("#spn"+idv).toggleClass("arrowdown arrowup");
-}
-else{
-$("#htm"+idv).css('height', '150px');
-$("#htm"+idv).css('overflow', 'hidden');
-$("#spn"+idv).html("Show more.");
-$("#spn"+idv).toggleClass("arrowup arrowdown");}	
-}
-</script>
+
 <!--#include virtual="/footer.asp" -->

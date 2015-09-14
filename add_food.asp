@@ -4,7 +4,7 @@
 <!--#include virtual="/security.asp" -->
 			<%
 			
-			'check to see if user chosen to add a recipie of edit one?
+			'check to see if user chosen to add a recipe of edit one?
 			if request("id")<>"" then
 				id_food=request("id")
 			else
@@ -46,54 +46,44 @@
 			<form  id="myform" name="myform" action="/admin/ajax/save.asp">
 			<input type="hidden" name="t" value="food">
 			<input type="hidden" name="uid" id="uid" value="<%=uid_food%>">
-			<input type="hidden" name="file_name" id="file_name" value="<%=name%>.jpg">
+			<input type="hidden" name="file_name" id="file_name" value="<%=uid_food%>.jpg">
 			<input type="hidden" name="folder_name" id="folder_name" value="food">
 			<input type="hidden" name="idf" id="idf" value="<%=id_food%>">
 			<div class="row row-centered">
-				<div class="col-md-12">
-					<h3>Adding Recipe</h3>
+				<div class="col-xs-12">
+					<h3>Adding Food</h3>
 				</div>
 			</div>
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+		        <div class="col-xs-3 indent10" >
 		          Food Name
 		        </div>
-		        <div class="col-md-5">
+		        <div class="col-xs-5">
 					<input type="text" size="50" maxlength="100" name="name" value="<%=name%>">        
 		        </div>
-		        <div class="col-md-4">
+		        <div class="col-xs-4">
 					<a class="button icon arrowright" href="/food.asp?f=<%=id_food%>">Preview on web<a>
 		        </div>
 
 
 		    </div>
 			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+		        <div class="col-xs-3 indent10" >
 		          Picture
 		        </div>
-		        <div class="col-md-9">
-
-				<%if isnull(Image_path) or Image_path="" then%>
-				<div>
-				<div id="uploader">
-					<p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
-				</div>
-				<br />
-				<%
-				else%>
+		        <div class="col-xs-9">
 				<div class="thumb-wrapper">
 				<img id="update_img" src="<%=Image_path%>" alt="<%=name%>" />
 				<span id="updatePhoto" onclick="updatePhoto();"></span>
 				<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
-				</div>
-				<%end if%>           
+				</div>         
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+		        <div class="col-xs-3 indent10" >
 		         	Add Vitamin
 		        </div>
-		        <div class="col-md-9">
+		        <div class="col-xs-9">
 				<select name="vitamin" id ="vitamin"><option value="0">Select Vitamin</option>
 						<%'enumerate foods list
 						x=openRS("SELECT  v.name, v.`id_vitamin`,  v.`color` FROM `antidote`.`vitamins` v order by v.name;")
@@ -112,10 +102,10 @@
 
  		
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" >
+		        <div class="col-xs-3 indent10" >
 		          Ingredients
 		        </div>
-		        <div id="ingredients_list" class="col-md-9">
+		        <div id="ingredients_list" class="col-xs-9">
 		        	<%'check to see what ingredients are already added?'
 						x=openRS("SELECT `id_food_vitamin`, `id_food`, v.name, v.`id_vitamin`,`percentage`,  v.`color` FROM `antidote`.`food_vitamins` fv inner join vitamins v on v.id_vitamin=fv.id_vitamin where id_food="&id_food&" order by fv.percentage desc;")
 		        	if rsTemp.eof then
@@ -130,25 +120,25 @@
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" style="margin-top:20px;" >
+		        <div class="col-xs-3 indent10" style="margin-top:20px;" >
 		         	Introduction
 		        </div>
-		        <div class="col-md-9">
+		        <div class="col-xs-9">
 					<textarea id="intro" name="intro" class="editor"><%=Intro%></textarea>
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-3 indent10" style="margin-top:20px;" >
+		        <div class="col-xs-3 indent10" style="margin-top:20px;" >
 		         	Description
 		        </div>
-		        <div class="col-md-9">
+		        <div class="col-xs-9">
 					<textarea id="Description" name="Description" class="editor"><%=Description%></textarea>
 		        </div>
 		    </div>
 		    
  		    <div class="row " style="">
- 		    	<div class="col-md-4"></div>
-		    	<div class="col-md-8">
+ 		    	<div class="col-xs-4"></div>
+		    	<div class="col-xs-8">
 		    		 <%if session("can_authorize")=true then%>
 		    		<input type="checkbox" name="show_on_web" id="show_on_web" checked="<%=bwebCheck%>"> <label for="show_on_web">Show this food to the live website.</label></br>
 		          <%end if%> 

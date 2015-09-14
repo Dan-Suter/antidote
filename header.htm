@@ -1,8 +1,12 @@
-<%sScriptName=Request.ServerVariables ("SCRIPT_NAME")
+<%
+dim sFilePath
+sFilePath="C:\inetpub\wwwroot\antidote"
+sScriptName=Request.ServerVariables ("SCRIPT_NAME")
 do until instr(sScriptName,"/")=0
 	sScriptName=right(sScriptName,len(sScriptName)-instr(sScriptName,"/"))
 loop
 sScriptName=ucase(sScriptName)
+
 %>
 
 <!DOCTYPE html>
@@ -110,7 +114,7 @@ sURL="/admin/ajax/delete.asp?d="+d+"&t="+t
 
 <%END IF%>
 <%if sScriptName="MY_HOME.ASP" then%>
-<script type="text/javascript" src="/files/plupload-2.1.7/js/upload_people.js"></script>
+<script type="text/javascript" src="/files/plupload-2.1.7/js/upload.js"></script>
 <%END IF%>
 <%if sScriptName="ADD_RECIPE.ASP" then%>
 <script type="text/javascript" src="/files/plupload-2.1.7/js/upload.js"></script>
@@ -201,7 +205,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <div id="header-wrap">
 	<div class="row row-centered" style="height:150px">
 			<div class="col-xs-6 ">
-				<span class='wsite-logo'><a href='/'><img class="img-responsive center-block" src='/images/antidote_logo_300.png' />
+				<span class='wsite-logo'><a href='/'><img class="img-responsive center-block" src='/images/antidote_logo_300.png' style="float:right;"/>
 			</div>	
 			<div class="col-xs-6 ">
 					<div class="row row-centered">
@@ -233,7 +237,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	</div>
 </div>
 <div class="navbar" id="topnav">                
-	<div class="container">
+	<div class="">
 		<div class="col-xs-12 inner-nav">
 			<ul class="nav navbar-nav">
 				<li id="home"><a href="/default.asp">Home</a></li>

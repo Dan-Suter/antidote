@@ -71,7 +71,7 @@ $chunk = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
 $chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 0;
 
 
-
+//echo ($targetDir);
 // Remove old temp files	
 if ($cleanupTargetDir) {
 	if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
@@ -179,7 +179,9 @@ else
 	if ($foldername == "recipe") {
 		$sql = "UPDATE recipes SET image = '/images/recipe/med/".$_REQUEST["newfilename"]."' WHERE uid_recipe ='".substr($_REQUEST["newfilename"], 0, 8)."';";
 	}
-
+	if ($foldername == "people") {
+			$sql = "UPDATE people SET image_path = '/images/people/med/".$_REQUEST["newfilename"]."' WHERE uid_people ='".$_REQUEST["uid"]."';";
+		}
 if ($conn->query($sql) === TRUE) {
     echo "Record updated successfully";
 } else {

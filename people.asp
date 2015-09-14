@@ -31,9 +31,16 @@
 				name=rsTemp("name")
 				about_me=rsTemp("about_me")
 				id_people=rsTemp("id_people")
+				auto_login=rsTemp("auto_login")
+				if not CheckExistsFile(sFilePath&image_path) then
+					image_path="/images/people/small/generic_person.jpg"
+				end if
 				%>
-	 			<div id="htm<%=id_people%>" class="row row-centered " style="height:135px;overflow:hidden;">
+	 			<div id="htm<%=id_people%>" class="row row-centered " style="height:150px;overflow:hidden;">
 	        <div class="col-xs-2" style="">
+ 		<%if session("can_authorize") then%>   	
+    	<a href="/login.asp?a=<%=auto_login%>&r=/recipes.asp">
+    	<%end if%>
 						<%if not image_path="" and not isnull(image_path) then%>
 							<img src="<%=image_path%>" alt="<%=name&"'s picture"%>">
 							<%
@@ -41,7 +48,11 @@
 							%>
 							<img src="/people/images/blank-face-icon.png" alt="<%=name%>'s picture">
 						<%end if%> 
-						<button id="spn<%=id_people%>" class="button icon arrowdown" onclick="showMore(<%=id_people%>)">Show more.</button>          
+ 		<%if session("can_authorize") then%>   	
+    	</a>
+    	<%end if%> 
+						<button id="spn<%=id_people%>" class="button icon arrowdown" onclick="showMore(<%=id_people%>)">Show more.</button> 
+       
 		      </div>
 	        <div class="col-xs-10">
 	          <b><%=name%>.</b> <%=about_me%>
@@ -75,7 +86,7 @@ $("#spn"+idv).html("Show less.");
 $("#spn"+idv).toggleClass("arrowdown arrowup");
 }
 else{
-$("#htm"+idv).css('height', '135');
+$("#htm"+idv).css('height', '150');
 $("#htm"+idv).css('overflow', 'hidden');
 $("#spn"+idv).html("Show more.");
 $("#spn"+idv).toggleClass("arrowup arrowdown");}	

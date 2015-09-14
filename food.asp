@@ -2,28 +2,6 @@
 <!-- #include virtual="/connection.asp"-->
 <!-- #include virtual="/functions.asp"-->
 
-
-<style>
-.service-list {
-list-style-type: none;
-margin-left:0px;
-padding-left:0px;
-display: inline-block;
-}
-.service-list img
-{
-float:left;
-}
-.service-list p,h3 {
-text-align: left; 
-display:inline-block;
-padding: 0;
-}
-.table {padding:1px;}
-</Style>
-<style>
-	.graph{background-color:#63a504;color:#fff}
-</style>
 <% 
 sSQL = "SELECT * FROM food where id_food="&request("f")&";"
 x=openRS(sSQL)

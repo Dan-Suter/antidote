@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .bodyText 
 {
      margin-left:20px;
@@ -12,6 +13,34 @@
 }
 .center 
 {
+=======
+.service-list {
+list-style-type: none;
+margin-left:0px;
+padding-left:0px;
+display: inline-block;
+}
+.service-list img
+{
+float:left;
+}
+.service-list p,h3 {
+text-align: left; 
+display:inline-block;
+padding: 0;
+}
+.table {padding:1px;}
+.graph{background-color:#63a504;color:#fff}
+#recipes-person-img{margin-right: 5px;}
+.small-graph-name{border-right:2px solid #000;padding-right: 5px; white-space: nowrap;}
+.small-graph-name a{ white-space: nowrap;}
+.small-graph-line{border:1px solid #000;height: 17px;}
+div.small-graph-line:hover{ cursor: pointer; cursor: hand;}
+.bodyText {margin-left:20px;}
+.imgList{margin-left:-40px;}
+.pad5 {padding: 10px;}
+.center {
+>>>>>>> 0bbb1a61920a9b5dd82ac648e9f0fc15c3ca278b
      float: none;
      margin-left: auto;
      margin-right: auto;

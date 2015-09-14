@@ -26,80 +26,70 @@
 			<input type="hidden" name="t" value="people">
 			<input type="hidden" id="uid" name="uid" value="<%=session("uid_people")%>">
 			<input type="hidden" id="file_name" name="file_name" value="<%=session("uid_people")%>.jpg">
+			<input type="hidden" name="folder_name" id="folder_name" value="people">
+			<input type="hidden" name="idp" id="idp" value="<%=id_people%>">
 			
 			<div class="row row-centered">
-				<div class="col-md-12">
+				<div class="col-xs-12">
 					<h3>My Profile</h3>
 				</div>
 			</div>
  			<div class="row row-centered">
-		        <div class="col-md-4 indent10" >
+		        <div class="col-xs-4 indent10" >
 		          My Name
 		        </div>
-		        <div class="col-md-8">
+		        <div class="col-xs-8">
 				<input type="text" size="30" name="name" id="name" value="<%=session("name")%>">  
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-4 indent10" >
+		        <div class="col-xs-4 indent10" >
 		          Email
 		        </div>
-		        <div class="col-md-8">
+		        <div class="col-xs-8">
 		        	<input type="text" size="30" name="email" id="email" value="<%=session("email")%>">      
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-4 indent10" >
+		        <div class="col-xs-4 indent10" >
 		          Password
 		        </div>
-		        <div class="col-md-8">
+		        <div class="col-xs-8">
 		        	<input type="password" size="30" name="password" id="password" value="<%=session("password")%>">           
 		        </div>
 		    </div>
  			<div class="row row-centered">
-		        <div class="col-md-4 indent10" >
+		        <div class="col-xs-4 indent10" >
 		          My Picture
-		        </div>
-		        <div class="col-md-8" style="">
-
-				<%if isnull(session("image_path")) or session("image_path")="" then%>
-				<div>
-				<div id="uploader">
-					<p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
-				</div>
-				<br />
-				<%
-				else%>
-				<div class="thumb-wrapper">
-				<img id="update_img" src="<%=session("image_path")%>" alt="<%=session("name")%>" />
-				<span id="updatePhoto" onclick="updatePhoto();"></span>
-				<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
-				</div>
-					
-				<%end if
-				%>           
+			        </div>
+			        <div class="col-xs-8" style="">
+					<div class="thumb-wrapper">
+					<img id="update_img" src="<%=session("image_path")%>" alt="<%=session("name")%>" />
+					<span id="updatePhoto" onclick="updatePhoto();"></span>
+					<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
+					</div>     
 		        </div>
 		    </div>
 
 		    <div class="row row-centered">
-		        <div class="col-md-4 indent10" >
+		        <div class="col-xs-4 indent10" >
 		         My Story
 		        </div>
-		        <div class="col-md-8">
+		        <div class="col-xs-8">
 		          <textarea id="about_me" name="about_me" class="editor"><%=session("about_me")%></textarea>
 		        </div>
 		    </div>
 		  
 		    <div class="row row-centered" style="text-align:center">
-		    	<div class="col-md-12">
+		    	<div class="col-xs-12">
 		            <button type="button"  class="button" onclick="Save_Form()">Save Changes</button>
 		      </div>
 		    </div>
 			<div class="row row-centered">
-				<div class="col-md-2">
+				<div class="col-xs-2">
 					<h3>My Recipes</h3>
 				</div>
-		    	<div class="col-md-19">
+		    	<div class="col-xs-12">
 		           <a class="button icon add" href="/add_Recipe.asp">Add a New Recipe..</a>
 		      </div>
 			</div>
@@ -111,13 +101,13 @@
 					do until rsTemp.eof%>
 
 					<div class="row row-centered">
-				        <div class="col-md-4 indent10" >
+				        <div class="col-xs-4 indent10" >
 				          <img src="<%=rsTemp("image")%>" alt="<%=rsTemp("name")%>">
 				        </div>
-				        <div class="col-md-6">
+				        <div class="col-xs-6">
 							<%=rsTemp("name")%>  added on (<%=rsTemp("added")%>) 
 				        </div>
-				        <div class="col-md-2">
+				        <div class="col-xs-2">
 				         	<a class="button icon edit" href="add_Recipe.asp?id=<%=rsTemp("id_recipe")%>">Edit</a>
 				        </div>
 				    </div>	
