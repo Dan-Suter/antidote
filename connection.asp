@@ -13,10 +13,12 @@ ipaddress = Request.ServerVariables("HTTP_X_FORWARDED_FOR")
 if ipaddress = "" then
     ipaddress = Request.ServerVariables("REMOTE_ADDR") 
 end if
-strDatabase = "Driver={MySQL ODBC 3.51 Driver}; Server=localhost;Port=3306;Database=antidote;User=antidote2;Password=antidote;Option=3;"
-sMDBA = "Driver={MySQL ODBC 3.51 Driver}; Server=localhost;Port=3306;Database=antidote;User=root;Password=Strength2010;Option=3;"
-sMDB=strDatabase
 
+'strDatabase="Driver={MySQL ODBC 3.51 Driver};Server=localhost;Port=3306;Database=antidote;User=antidote2;Password=antidote;Option=3;"
+strDatabase="Driver={MySQL ODBC 5.3 ANSI Driver};Server=localhost;Port=3306;Database=antidote;User=antidote2;Password=antidote;Option=3;"
+'sMDBA="Driver={MySQL ODBC 3.51 Driver};Server=localhost;Port=3306;Database=antidote;User=root;Password=Strength2010;Option=3;"
+sMDBA="Driver={MySQL ODBC 5.3 ANSI Driver};Server=localhost;Port=3306;Database=antidote;User=root;Password=Strength2010;Option=3;"
+sMDB=strDatabase
 
 Sub OpenDB()
 set Conn=server.createobject("ADODB.connection")
