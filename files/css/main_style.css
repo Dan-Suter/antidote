@@ -46,6 +46,7 @@ div.small-graph-line:hover{ cursor: pointer; cursor: hand;}
      margin-right: auto;
 }
 
+#update_img{background-color: #eee;width:280px;height: 208px;border: 1px solid #000} 
  
  #page {  margin: 0 auto;  }
  #header-wrap {background: #fff url(/images/theme/green_grass.png) center bottom repeat-x; min-width: 400px; clear: both; margin-bottom:-10px}
