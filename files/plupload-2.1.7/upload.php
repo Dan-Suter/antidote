@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 $foldername = $_REQUEST["folder_name"];
 //echo($foldername);
 $targetDir = ini_get("upload_tmp_dir") . DIRECTORY_SEPARATOR . "plupload";
-$targetDir = 'C:\inetpub\wwwroot\antidote\images\\';
+$targetDir = 'D:\other_sites\antidote\images\\';
 $targetDir .= $foldername;
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds

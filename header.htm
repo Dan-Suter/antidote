@@ -1,6 +1,6 @@
 <%
 dim sFilePath
-sFilePath="C:\inetpub\wwwroot\antidote"
+sFilePath="d:\other_sites\antidote"
 sScriptName=Request.ServerVariables ("SCRIPT_NAME")
 do until instr(sScriptName,"/")=0
 	sScriptName=right(sScriptName,len(sScriptName)-instr(sScriptName,"/"))
