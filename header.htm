@@ -18,6 +18,13 @@ sScriptName=ucase(sScriptName)
 <meta property='og:site_name' content='Antidote Juice Bar' />
 <meta property='og:title' content='Antidote Juice Bar' />
 <meta property='og:description' content='Vegetarian Friendly, Serves organic healthy fresh salads, fresh juices, fresh almond milk, a calm &amp; fresh Atmosphere.' />
+<%
+'x=rwe(sScriptName)
+if sScriptName="RECIPE.ASP" then
+sSQL="Select image_name from recipies where "
+x=rw("<meta property='og:image' content='/images/recipe/large/c981d487.jpg' />")
+end if
+%>
 <meta property='og:image' content='/images/antidote_logo_new.png' />
 <meta property='og:image' content='/images/beetroot_juice.jpg' />
 <meta property='og:image' content='/images/banana_shake.jpg' />

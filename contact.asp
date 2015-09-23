@@ -1,5 +1,7 @@
 <!--#include virtual="/header.htm" -->
-<h2>Opening in August 2015</h2>
+<h2>Opening Hours</h2>
+<b>Tuesday to Friday 8.30am to 3.30pm</b></br>
+<b>Saturday to 2.30pm</b></br></br>
 <b>Shop 6 Carnaby Lane, New Brigthon,Christchurch, New Zealand.</b></br> </br>
 </span>
 </br>

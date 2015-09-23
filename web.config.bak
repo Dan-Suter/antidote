@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <connectionStrings>
+    <remove name="LocalMySqlServer" />
+    <add connectionString="Server=127.0.0.1;Database=antidote;User ID=antidote;Password=antidote" name="LocalMySqlServer" />
+  </connectionStrings>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.5.1" />
+      </system.Web>
+  -->
+
+  <system.web>
+    <compilation debug="true" targetFramework="4.5.1" />
+    <pages controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID" />
+  </system.web>
+    <system.webServer>
+        <httpErrors errorMode="Detailed" />
+    </system.webServer>
+</configuration>

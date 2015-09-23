@@ -65,7 +65,7 @@
 		        <div class="col-xs-9">
 				<div class="thumb-wrapper">
 				<img id="update_img" src="<%=image%>" alt="<%=name%>" />
-				<span id="updatePhoto" onclick="updatePhoto();"></span>
+				<span id="updatePhoto" class="photo_holder_recipe" onclick="updatePhoto();"></span>
 				<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
 				</div>          
 		        </div>
@@ -123,7 +123,7 @@
 		        		x=rw("<b><i>Add some ingredients to your menu by using the add ingredient button above....</i></b>")
 		        	else
 		        		do until rsTemp.eof
-		        			x=rw("<div id=""ingredient"&rsTemp("id_recipe_food")&""">"&rsTemp("qty_grams")&" grams of "&rsTemp("name")&" <button class=""button danger icon remove""  onclick=""Delete_Ingredient("&rsTemp("id_recipe_food")&"); return false;"">Remove item</button></div>")
+		        			x=rw("<div id=""ingredient"&rsTemp("id_recipe_food")&""">"&rsTemp("qty_grams")&" grams of <a href=""/food.asp?f="&rsTemp("id_food")&""">"&rsTemp("name")&"</a> <button class=""button danger icon remove""  onclick=""Delete_Ingredient("&rsTemp("id_recipe_food")&"); return false;"">Remove item</button></div>")
 		        			rsTemp.movenext
 		        		loop
 		        	end if

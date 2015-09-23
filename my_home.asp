@@ -63,8 +63,8 @@
 		          My Picture
 			        </div>
 			        <div class="col-xs-8" style="">
-					<div class="thumb-wrapper">
-					<img id="update_img" src="<%=session("image_path")%>" alt="<%=session("name")%>" />
+					<div class="thumb-wrapper" style="min-width:200px;">
+					<img id="update_img" class="photo_holder_person" src="<%=session("image_path")%>" alt="<%=session("name")%>" />
 					<span id="updatePhoto" onclick="updatePhoto();"></span>
 					<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
 					</div>     

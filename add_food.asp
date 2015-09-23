@@ -73,7 +73,7 @@
 		        </div>
 		        <div class="col-xs-9">
 				<div class="thumb-wrapper">
-				<img id="update_img" src="<%=Image_path%>" alt="<%=name%>" />
+				<img id="update_img"  class="photo_holder_food" src="<%=Image_path%>" alt="<%=name%>" />
 				<span id="updatePhoto" onclick="updatePhoto();"></span>
 				<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
 				</div>         
@@ -94,7 +94,7 @@
 						x=closeRS()
 						%>
 					</select>    
-		        % of RDI <input type="text" name="percentage" id="percentage" value="<%=percentage%>" size="2"> based on serving size of   
+		        % of RDI <input type="text" name="percentage" id="percentage" value="<%=percentage%>" size="2"> for serving size of   
 		        <input type="text" size="6" maxsize="5" id="food_amount" name="food_amount" value="<%=grams_default%>" disabled> grams
 		        <input type="button" id="add_vitamin" class="button" value="Add Vitamin" onclick="Add_Vitamin()">
 		        </div>

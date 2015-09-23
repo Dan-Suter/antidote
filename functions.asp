@@ -4901,12 +4901,22 @@ if ConvertToHTML_InputBasic="" then ConvertToHTML_InputBasic="<input type=""" & 
 end function
 
 
+
 sub Get_Image(sURL,sSavePath)
-'on error resume next
+on error resume next
+ecount=0
 Set xmlhttp = CreateObject("Msxml2.SERVERXMLHTTP")
-response.Write(sURL&"</br>")
+'response.Write(sURL&"</br>")
 xmlhttp.Open "GET", sURL, false
-xmlhttp.Send()	
+xmlhttp.Send()
+while not err.number=0 and ecount<3
+	Err.Clear()
+	ecount=ecount+1
+	Set xmlhttp = CreateObject("Msxml2.SERVERXMLHTTP")
+	'response.Write(sURL&"</br>")
+	xmlhttp.Open "GET", sURL, false
+	xmlhttp.Send()
+wend
 'Create a Stream
 Set adodbStream = CreateObject("ADODB.Stream")
 status = xmlhttp.status 
@@ -4984,6 +4994,25 @@ if fs.FileExists(sSourcePath) then
 end if
 set jpeg = nothing
 Set Jpeg2 = nothing
+on error goto 0
+End sub
+
+sub Resize_Image(sPathOriginal,sPathSave,sWidth,sHeight)
+'on error resume next
+set fs = CreateObject("Scripting.FileSystemObject")
+set jpeg = Server.CreateObject("Persits.Jpeg")
+'check path make sure photo exists...
+if fs.FileExists(sPathOriginal) then 
+	Jpeg.open sPathOriginal
+	Jpeg.Width = sWidth
+	Jpeg.Height = sHeight
+	Jpeg.Save(sPathSave)
+	  'on error goto 0
+	 Response.Write sPathSave & " Saved!" & "</br>"
+else 
+ x=rwb("path not found! "& sPathOriginal&"""")
+end if
+set jpeg = nothing
 on error goto 0
 End sub
 

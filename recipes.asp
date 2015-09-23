@@ -35,7 +35,10 @@
 '************************************************
 bAdmin=0
 if session("can_authorize") then bAdmin=1
-sSQL = "Call Get_recipes ("&bAdmin&");"
+id_person=session("id_people")
+if id_person="" then id_person=0
+sSQL = "Call Get_recipes ("&bAdmin&","&id_person&");"
+'x=rwe(sSQL)
 x=openRS(sSQL)
 %>
 
@@ -55,6 +58,9 @@ x=openRS(sSQL)
 		uid_recipe=rsTemp("uid_recipe")
 		uid_recipe=rsTemp("uid_people")
 		person_name=rsTemp("person_name")
+
+
+
 		%>
 		<%if sFoodType<>rsTemp("group_name") then%>
 		<div class="row">
@@ -72,11 +78,11 @@ x=openRS(sSQL)
 			<div class="col-sm-10 col-xs-10">
 				<h3 style=""><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h3>
 			</div>
-			<%if session("can_authorize") then%>
 			<div class="col-sm-2 col-xs-2">
-				<a class="button icon edit" href="/add_recipe.asp?id=<%=id_recipe%>">Edit</a>
+				<%if session("can_authorize") then%>
+					<a class="button icon edit" href="/add_recipe.asp?id=<%=id_recipe%>">Edit</a>
+				<%end if%>
 			</div>
-			<%end if%>
 		</div>
 		<div class="row" id="htm<%=id_recipe%>" style="height:auto;overflow:hidden;">
 			<div class="col-md-4 col-sm-4 col-xs-12">
@@ -85,23 +91,41 @@ x=openRS(sSQL)
 			<div class="col-md-4 col-sm-4 col-xs-12">
 				<div class="row">		        
 			        <div id="ingredients_list" class="col-xs-12">
-			        	<ul>
+			        	<ul class="no-indent">
 			        	<%'check to see what ingredients are already added?'
 			        	x=openRSA("call Recipes_By_ID ("&id_recipe&")")
 			        	if rsTempA.eof then
 			        		x=rw("No Ingredients")
 			        	else
+			        		icount=0
 			        		do until rsTempA.eof
+			        			icount=icount+1
 			        			x=rw("<li style=""white-space:nowrap"">"&rsTempA("qty_grams")&" grams of <a href=""/food.asp?f="&rsTempA("id_food")&""">"&rsTempA("name")&"</a></li>")
 			        			rsTempA.movenext
+			        			if icount=6 then exit do
 			        		loop
 			        	end if
 			        	x=closeRSA()
 			        	%>
 			        	<li><b>Serves <%=servings%></b></li>
 			        	</ul>
-			        	<div><img id="recipes-person-img" src="/images/people/xsthumb/<%=rsTemp("uid_people")%>.jpg" alt="<%=rsTemp("person_name")%>"><b>Recipe by <%=rsTemp("person_name")%></b></div>
-			        	<div style="float:right;"></div>
+        				<div class="row">
+			        		<div class="col-md-5 col-sm-5 col-xs-12">
+			        		<button type="button" class="btn btn-default btn-sm"  onclick="Add_favourite(<%=rsTemp("id_recipe")%>)">
+			        			<%icon="glyphicon-star-empty"
+			        			if not isnull(rsTemp("id_people_favourite")) then
+			        				icon="glyphicon-star" 
+			        			end if
+			        			%>
+									  <span id="favourite<%=rsTemp("id_recipe")%>" class="glyphicon <%=icon%>" aria-hidden="true"></span> Favourite
+										<span class="result"></span>
+									</button>
+									</div>
+									<div class="col-md-7 col-sm-7 col-xs-12">
+										<img id="recipes-person-img" src="/images/people/xsthumb/<%=rsTemp("uid_people")%>.jpg" alt="<%=rsTemp("person_name")%>"><b>By <%=rsTemp("person_name")%><i class="icon-large icon-search"></i></b>
+									</div>
+			        	</div>
+			
 			        </div>
 			    </div>
 			</div>		
@@ -136,5 +160,23 @@ x=closeRS()%>
 	</div>
 </div>
 <div id="spacer" style="margin-top:20px;"></div>
+<script>
+$("#favourite").hover()
+function Add_favourite(idR)
+{
+	if ($("#favourite"+idR ).attr("class")=="glyphicon glyphicon-star-empty")
+	{
+		$("#favourite"+idR ).addClass("glyphicon-star");
+		$("#favourite"+idR ).removeClass("glyphicon-star-empty");
+		$.get( "/admin/ajax/add_favourite_recipe.asp?r="+idR+"");
+		}
+		else 
+			{
+		$("#favourite"+idR ).addClass("glyphicon-star-empty");
+		$("#favourite"+idR ).removeClass("glyphicon-star");
+		$.get( "/admin/ajax/add_favourite_recipe.asp?r="+idR+"&d=1");
+				}
 
+}
+</script>
 <!--#include virtual="/footer.asp" -->

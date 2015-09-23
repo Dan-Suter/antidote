@@ -13,7 +13,7 @@ if request("d")="" then
 	sSQL=""
 	sSQL="Select id_recipe_food,qty_grams,name from recipe_foods rf inner join food f on f.id_food=rf.id_food order by id_recipe_food desc limit 1"
 	x=openRS(sSQL)
-	x=rw("<div id=""ingredient"&rsTemp(0)&""">"&rsTemp("qty_grams")&" grams of "&rsTemp("name")&" <button class=""button danger icon remove""  onclick=""Delete_Ingredient("&rsTemp(0)&"); return false;"">Remove item</button></div>")
+	x=rw("<div id=""ingredient"&rsTemp(0)&""">"&rsTemp("qty_grams")&" grams of <a href=""/food.asp?f="&request("idf")&""">"&rsTemp("name")&"</a> <button class=""button danger icon remove""  onclick=""Delete_Ingredient("&rsTemp(0)&"); return false;"">Remove item</button></div>")
 	x=closeRS()
 	'x=rwb("inserted "&sSQL)
 else

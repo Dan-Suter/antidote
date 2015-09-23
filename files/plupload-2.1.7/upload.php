@@ -129,24 +129,27 @@ if (!$chunks || $chunk == $chunks - 1) {
 }
 
 if ($foldername == "food" || $foldername == "recipe") {
+	$mini_img = new \Eventviva\ImageResize($filePath);
+	$mini_img->crop(800, 600);
+	$mini_img->save($filePath);
 	$mini_img = new thumb;
 	$mini_img->load($filePath); 
 	$mini_img->resize(800,600); 
 	$mini_img->save($targetDir."/xlarge/".$fileName);
 	$mini_img->load($filePath); 
-	$mini_img->resize(450,375); 
+	$mini_img->resize(450,337); 
 	$mini_img->save($targetDir."/large/".$fileName);
 	$mini_img->load($filePath); 
-	$mini_img->resize(225,188); 
+	$mini_img->resize(225,169); 
 	$mini_img->save($targetDir."/med/".$fileName);
 	$mini_img->load($filePath);  
-	$mini_img->resize(112,94);     
+	$mini_img->resize(112,85);     
 	$mini_img->save($targetDir."/small/".$fileName);
 	$mini_img->load($filePath);  
-	$mini_img->resize(62,46);   
+	$mini_img->resize(62,43);   
 	$mini_img->save($targetDir."/thumb/".$fileName);
 	$mini_img->load($filePath);  
-	$mini_img->resize(31,23);   
+	$mini_img->resize(31,22);   
 	$mini_img->save($targetDir."/xsthumb/".$fileName);
 }
 else
@@ -156,19 +159,19 @@ else
 	$mini_img->resize(600,800); 
 	$mini_img->save($targetDir."/xlarge/".$fileName);
 	$mini_img->load($filePath); 
-	$mini_img->resize(375,450); 
+	$mini_img->resize(337,450); 
 	$mini_img->save($targetDir."/large/".$fileName);
 	$mini_img->load($filePath); 
-	$mini_img->resize(188,225); 
+	$mini_img->resize(169,225); 
 	$mini_img->save($targetDir."/med/".$fileName);
 	$mini_img->load($filePath);  
-	$mini_img->resize(94,112);     
+	$mini_img->resize(85,112);     
 	$mini_img->save($targetDir."/small/".$fileName);
 	$mini_img->load($filePath);  
-	$mini_img->resize(46,62);   
+	$mini_img->resize(43,62);   
 	$mini_img->save($targetDir."/thumb/".$fileName);
 	$mini_img->load($filePath);  
-	$mini_img->resize(23,31);   
+	$mini_img->resize(22,31);   
 	$mini_img->save($targetDir."/xsthumb/".$fileName);	
 }
  

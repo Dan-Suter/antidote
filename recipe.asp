@@ -16,20 +16,39 @@ x=openRS(sSQL)
 
 <%
 irow=0
-do until rsTemp.eof
-	if irow mod 2=1 then strClass="light_blue_row" else strClass="white_row"
-	irow=irow+1
-	id_recipe=rsTemp("id_recipe")
-	id_person=rsTemp("id_person")
-	name=rsTemp("name")
-	image=replace(rsTemp("image"),"med","large")
-	'image=rsTemp("image")
-	how_to_make=rsTemp("how_to_make")
-	id_type=rsTemp("id_type")
-	servings=rsTemp("servings")
-	brief=rsTemp("brief")
-	uid_recipe=rsTemp("uid_recipe")
-	sArray=""
+if irow mod 2=1 then strClass="light_blue_row" else strClass="white_row"
+irow=irow+1
+id_recipe=rsTemp("id_recipe")
+id_person=rsTemp("id_person")
+name=rsTemp("name")
+image=replace(rsTemp("image"),"med","large")
+'image=rsTemp("image")
+how_to_make=rsTemp("how_to_make")
+id_type=rsTemp("id_type")
+servings=rsTemp("servings")
+brief=rsTemp("brief")
+uid_recipe=rsTemp("uid_recipe")
+sArray=""
+sSQL=""
+'get the meal with suggested contirbution
+sSQL="Call get_recipe_with_contribution ("&request("r")&")"
+x=openRSA(sSQL)
+prices=""
+icount=0
+do until rsTempA.eof
+	icount=icount+1
+	if icount=1 then
+		prices=prices&"<a class=""button eatme primary"" href=""/loveyourfood.asp?r="&id_recipe&"&p="&rsTempA("id_portion_size")&""">$"&rsTempA("amount_currency")&" for "&rsTempA("portion_name")&" </a> "
+	else
+		prices=prices&"<a class=""button eatme"" href=""/loveyourfood.asp?r="&id_recipe&"&p="&rsTempA("id_portion_size")&""">$"&rsTempA("amount_currency")&" for "&rsTempA("portion_name")&" </a> "
+	end if
+	rsTempA.movenext
+loop
+if icount>1 then 'make a group button
+	'prices=replace(prices,"<a ","<li ")
+	prices="<div class=""button-group"">"&prices&"</div>"
+end if
+x=closeRSA()
 	%>
 <script type="text/javascript">
   google.load("visualization", "1", {packages:["corechart"]});
@@ -85,14 +104,18 @@ do until rsTemp.eof
 	'x=rwe("here.")
 	%>
 		<div class="row">
-			<div class="col-sm-10 col-xs-10">
-				<h1><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h1>
+				<div class="col-sm-5 col-xs-12">
+				<h3 style=""><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h3>
 			</div>
-			<%if session("id_person")=id_person or session("can_authorize") then%>
-			<div class="col-sm-2 col-xs-2">
-				<a class="button icon edit" href="/add_recipe.asp?id=<%=id_recipe%>">Edit</a>
+			<div class="col-sm-6 col-xs-12">
+				<%=prices%>
 			</div>
+			<div class="col-sm-1 col-xs-12">
+			<a style="min-width:70px;" class="button icon home" href="/loveyourfood.asp?id=<%=id_recipe%>">DIY</a>
+			<%if session("can_authorize") then%>
+			<a class="button icon edit" style="min-width:70px;float:left;margin-left:0px;" href="/add_recipe.asp?id=<%=id_recipe%>">Edit</a>
 			<%end if%>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-7 col-xs-12">
@@ -152,8 +175,6 @@ do until rsTemp.eof
 
 		</div>
 	<%
-	rsTemp.movenext
-loop
 x=closeRS()%>
 	</div>
 </div>

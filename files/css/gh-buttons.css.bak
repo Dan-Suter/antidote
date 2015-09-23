@@ -13,7 +13,7 @@
     position: relative;
     overflow: visible;
     display: inline-block;
-    padding: 1em 2em;
+    padding: 0.5em 1em;
     border: 1px solid #d4d4d4;
     margin: 0;
     text-decoration: none;
@@ -32,7 +32,7 @@
     background-image: linear-gradient(#f4f4f4, #ececec);
     -moz-background-clip: padding; /* for Firefox 3.6 */
     background-clip: padding-box;
-    border-radius: 0.8em;
+    border-radius: 0.5em;
     /* IE hacks */
     zoom: 1;
     *display: inline;
@@ -40,7 +40,6 @@
 
 .button:hover,
 .button:focus,
-.button:active,
 .button.active {
     border-color: #3072b3;
     border-bottom-color: #2a65a0;
@@ -52,18 +51,6 @@
     background-image: -moz-linear-gradient(#599bdc, #3072b3);
     background-image: -o-linear-gradient(#599bdc, #3072b3);
     background-image: linear-gradient(#599bdc, #3072b3);
-}
-
-.button:active,
-.button.active {
-    border-color: #2a65a0;
-    border-bottom-color: #3884cd;
-    background-color: #3072b3;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3072b3), to(#599bdc));
-    background-image: -moz-linear-gradient(#3072b3, #599bdc);
-    background-image: -ms-linear-gradient(#3072b3, #599bdc);
-    background-image: -o-linear-gradient(#3072b3, #599bdc);
-    background-image: linear-gradient(#3072b3, #599bdc);
 }
 
 /* overrides extra padding on button elements in Firefox */
@@ -276,16 +263,27 @@
     background-image: linear-gradient(#dc5f59, #b33630);
 }
 
-.button.danger:active,
-.button.danger.active {
-    border-color: #a0302a;
-    border-bottom-color: #bf4843;
-    background-color: #b33630;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b33630), to(#dc5f59));
-    background-image: -moz-linear-gradient(#b33630, #dc5f59);
-    background-image: -ms-linear-gradient(#b33630, #dc5f59);
-    background-image: -o-linear-gradient(#b33630, #dc5f59);
-    background-image: linear-gradient(#b33630, #dc5f59);
+/* eat_me button
+   ========================================================================== */
+
+.button.eatme {
+    color: #fff;
+    background-color: #63a504;
+}
+
+.button.eatme:hover,
+.button.eatme:focus,
+.button.eatme:active {
+     	border-color: #7bb324;
+    border-bottom-color: #7bb324;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    color: #fff;
+    background-color: #63a504;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#63a504), to(#85c819));
+    background-image: -moz-linear-gradient(#63a504, #85c819);
+    background-image: -o-linear-gradient(#63a504, #85c819);
+    background-image: linear-gradient(#63a504, #85c819);  
 }
 
 /* Pill button

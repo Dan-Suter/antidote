@@ -22,7 +22,7 @@
         bAdmin=1
     end if
     
-    sSQL = "Call Get_recipes ("&bAdmin&");"
+    sSQL = "Call Get_recipes ("&bAdmin&",0);"
     x=openRS(sSQL)
 
 	irow=0
@@ -47,7 +47,7 @@
 		uid_recipe   = rsTemp("uid_recipe")
         
 		if sFoodType<>id_group_name then
-			response.write "<div class=""group_name"">" & id_group_name	& "</div>"
+			response.write "<div class=""group_name"">" & id_group_name	& "s</div>"
             sFoodType = id_group_name
             bNewRow   = true
             irow      = 1
