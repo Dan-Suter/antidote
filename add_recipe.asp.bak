@@ -63,19 +63,19 @@
 		          recipe Picture
 		        </div>
 		        <div class="col-xs-9">
-				<div class="thumb-wrapper">
-				<img id="update_img" src="<%=image%>" alt="<%=name%>" />
-				<span id="updatePhoto" class="photo_holder_recipe" onclick="updatePhoto();"></span>
-				<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
-				</div>          
+							<div class="thumb-wrapper">
+							<img id="update_img" src="<%=image%>" alt="<%=name%>" />
+							<span id="updatePhoto" class="photo_holder_recipe" onclick="updatePhoto();"></span>
+							<pre id="log" style="height: 300px; overflow: auto;display:none;"></pre>
+							</div>          
 		        </div>
 		    </div>
- 			<div class="row row-centered">
+ 				<div class="row row-centered">
 		        <div class="col-xs-3 indent10" >
 		          Recipe Type
 		        </div>
 		        <div class="col-xs-9">
-				<select name="type"><option value="0">Select Type</option>
+						<select name="type"><option value="0">Select Type</option>
 						<%'enumerate foods list
 						x=openRS("Select * from Recipe_types order by name;")
 						do until rsTemp.eof%>
@@ -84,10 +84,54 @@
 						loop
 						x=closeRS()
 						%>
-					</select>    
-		       
+						</select>    
 		          for no of people
-				<input type="text" name="servings" id="servings" value="<%=servings%>" size="2">    
+						<input type="text" name="servings" id="servings" value="<%=servings%>" size="2">    
+		        </div>
+		    </div>
+
+ 				<div class="row row-centered">
+		        <div class="col-xs-3 indent10" >
+		         	Add serving sizes
+		        </div>
+		        <div class="col-xs-9">
+							<select name="portion_size" id="portion_size"><option value="0">Select</option>
+							<%'enumerate foods list
+								x=openRS("SELECT id_portion_size,name FROM antidote.portion_sizes order by id_portion_size;")
+								do until rsTemp.eof
+									%>
+									<option value="<%=rsTemp(0)%>"<%if id_type=rsTemp(0) then x=rw("selected") %>><%=rsTemp(1)%></option>
+									<%
+									rsTemp.movenext
+								loop
+							x=closeRS()
+							%>
+							</select>
+							is <input type="text" size="2" maxsize="5" id="contribuition_amount" name="contribuition_amount" value="5.00">
+							<input type="button" id="add_contribution" class="button" value="Add Contribution" onclick="add_contribution(<%=id_recipe%>)">  
+						</div>
+					</div>
+					<div>
+					<div class="row row-centered">
+		        <div class="col-xs-3 indent10" >
+		          Serving sizes
+		        </div>
+		        <div id="contribution_list" class="col-xs-9">
+			        	<%'check to see what ingredients are already added?'
+								sSQL="Call get_recipe_with_contribution ("&id_recipe&")"
+								x=openRSA(sSQL)
+								prices=""
+								icount=0
+			        	if rsTempA.eof then
+			        		x=rw("<b><i>Add some pricing options.</i></b>")
+			        	else
+									do until rsTempA.eof
+										icount=icount+1
+										x=rw("<div id=""portion_size"&rsTempA("id_recipe_contribution")&""">"&rsTempA("portion_name")&" $"&rsTempA("amount_currency")&" <button class=""button danger icon remove""  onclick=""Delete_Contribution("&rsTempA("id_recipe_contribution")&"); return false;"">Remove</button></div>")
+										rsTempA.movenext
+									loop
+				        end if
+			        	%>
 		        </div>
 		    </div>
 
@@ -123,7 +167,7 @@
 		        		x=rw("<b><i>Add some ingredients to your menu by using the add ingredient button above....</i></b>")
 		        	else
 		        		do until rsTemp.eof
-		        			x=rw("<div id=""ingredient"&rsTemp("id_recipe_food")&""">"&rsTemp("qty_grams")&" grams of "&rsTemp("name")&" <button class=""button danger icon remove""  onclick=""Delete_Ingredient("&rsTemp("id_recipe_food")&"); return false;"">Remove item</button></div>")
+		        			x=rw("<div id=""ingredient"&rsTemp("id_recipe_food")&""">"&rsTemp("qty_grams")&" grams of <a href=""/food.asp?f="&rsTemp("id_food")&""">"&rsTemp("name")&"</a> <button class=""button danger icon remove""  onclick=""Delete_Ingredient("&rsTemp("id_recipe_food")&"); return false;"">Remove item</button></div>")
 		        			rsTemp.movenext
 		        		loop
 		        	end if
@@ -135,7 +179,7 @@
 		         	Brief Description
 		        </div>
 		        <div class="col-xs-9">
-						<textarea id="brief" name="brief" cols="100" rows="2" placeholder="Add a Breif Description of the recipe here.  This text will show on Menu page."><%=brief%></textarea>
+						<textarea id="brief" name="brief" cols="100" rows="2" placeholder="Add a Brief Description of the recipe here.  This text will show on Menu page."><%=brief%></textarea>
 		        </div>
 		    </div>
  			<div class="row row-centered">

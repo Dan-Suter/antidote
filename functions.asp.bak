@@ -5,6 +5,33 @@ Set xobj = Server.CreateObject("MSXML2.ServerXMLHTTP")
 'Pay DPS Payment Upgrade 14/04/2015
 'By Dan. replace pages myinvoices.asp,
 '******************************************
+
+
+Public Function FormatMoney(sString)
+	'change cRound to Normal, Up, Down
+	Const cRound = "Normal"
+	
+	If InStr(sString, ".") Then
+		'Adding extra zero's at the end for error correction (User passes "23." and it
+		'	will still display correctly) 
+		FormatMoney = sString & "000"
+		Select Case cRound
+			Case "Normal"
+				If Mid(FormatMoney, InStr(FormatMoney, ".") + 3) > 4 Then
+					FormatMoney = Left(FormatMoney, InStr(FormatMoney, ".") + 1) & Fix(Mid(FormatMoney, InStr(FormatMoney, ".") + 2, 1) + 1)
+				End If
+			Case "Up"
+				If Mid(FormatMoney, InStr(FormatMoney, ".") + 3) > 0 Then
+					FormatMoney = Left(FormatMoney, InStr(FormatMoney, ".") + 1) & Fix(Mid(FormatMoney, InStr(FormatMoney, ".") + 2, 1) + 1)
+				End If
+		End Select
+		FormatMoney = Left(FormatMoney, InStr(FormatMoney, ".") + 2)
+	Else: FormatMoney = sString & ".00" 'Appending cents to the dollar
+	End If
+	
+	FormatMoney = "$" & FormatMoney	'Appending dollar sign to beginning
+End Function
+
 function Pay_DPS(sXmlAction)
 
 Dim objXMLhttp 
@@ -4028,6 +4055,23 @@ end if
 set fso=nothing
 end function
 
+function ReNameFile(sFilePathtoRename,sNewFileNameLocation)
+dim fso
+Set fso = CreateObject("Scripting.FileSystemObject")
+if fso.FileExists(sFilePathtoRename) then
+	if not fso.FileExists(sNewFileNameLocation) then
+		fso.MoveFile sFilePathtoRename, sNewFileNameLocation
+		ReNameFile=sFilePathtoRename &" moved to "& sNewFileNameLocation
+	else
+		fso.DeleteFile sFilePathtoRename,1
+		ReNameFile=sNewFileNameLocation &" already exists "& sFilePathtoRename & "Deleted"
+	end if
+else
+	ReNameFile="No Update for "&sFilePathtoRename&": file not found"
+end if
+set fso=nothing
+end function
+
 function UploadTMImages(sPn)
 dim fs
 Set fs = CreateObject("Scripting.FileSystemObject")
@@ -4884,36 +4928,46 @@ if ConvertToHTML_InputBasic="" then ConvertToHTML_InputBasic="<input type=""" & 
 end function
 
 
+
 sub Get_Image(sURL,sSavePath)
-'on error resume next
+on error resume next
+ecount=0
 Set xmlhttp = CreateObject("Msxml2.SERVERXMLHTTP")
-response.Write(sURL&"</br>")
+'response.Write(sURL&"</br>")
 xmlhttp.Open "GET", sURL, false
-xmlhttp.Send()	
+xmlhttp.Send()
+while not err.number=0 and ecount<3
+	Err.Clear()
+	ecount=ecount+1
+	Set xmlhttp = CreateObject("Msxml2.SERVERXMLHTTP")
+	'response.Write(sURL&"</br>")
+	xmlhttp.Open "GET", sURL, false
+	xmlhttp.Send()
+wend
 'Create a Stream
 Set adodbStream = CreateObject("ADODB.Stream")
-'status = xmlhttp.status 
-'if err.number <> 0 or status <> 200 then 
-'    if status = 404 then 
-'        Response.Write "Page does not exist (404)." 
-'    elseif status >= 401 and status < 402 then 
-'        Response.Write "Access denied (401)." 
-'    elseif status >= 500 and status <= 600 then 
-'        Response.Write "500 Internal Server Error on remote site." 
-'    else 
-'        Response.write "Server is down or does not exist." 
-'    end if 
-'else  
-'    Response.Write "Server is up and URL is available."  
-'end if  
+status = xmlhttp.status 
+if err.number <> 0 or status <> 200 then 
+    if status = 404 then 
+        Response.Write "Page does not exist (404)." 
+    elseif status >= 401 and status < 402 then 
+        Response.Write "Access denied (401)." 
+    elseif status >= 500 and status <= 600 then 
+        Response.Write "500 Internal Server Error on remote site." 
+    else 
+        Response.write "Server is down or does not exist." 
+    end if 
+else  
+    Response.Write "Server is up and URL is available."  
+end if  
 'Open the stream
 adodbStream.Open 
 adodbStream.Type = 1 'adTypeBinary
 adodbStream.Write xmlhttp.responseBody
 'response.end
-'x=rwb("writing to : "&sSavePath)
+x=rwb("writing to : "&sSavePath)
 adodbStream.SaveToFile sSavePath, 2 'adSaveCreateOverWrite
-'response.write sSavePath&" saved!</br>"
+response.write sSavePath&" saved!</br>"
 adodbStream.Close
 Set adodbStream = Nothing
 Set xmlhttp = Nothing
@@ -4967,6 +5021,25 @@ if fs.FileExists(sSourcePath) then
 end if
 set jpeg = nothing
 Set Jpeg2 = nothing
+on error goto 0
+End sub
+
+sub Resize_Image(sPathOriginal,sPathSave,sWidth,sHeight)
+'on error resume next
+set fs = CreateObject("Scripting.FileSystemObject")
+set jpeg = Server.CreateObject("Persits.Jpeg")
+'check path make sure photo exists...
+if fs.FileExists(sPathOriginal) then 
+	Jpeg.open sPathOriginal
+	Jpeg.Width = sWidth
+	Jpeg.Height = sHeight
+	Jpeg.Save(sPathSave)
+	  'on error goto 0
+	 Response.Write sPathSave & " Saved!" & "</br>"
+else 
+ x=rwb("path not found! "& sPathOriginal&"""")
+end if
+set jpeg = nothing
 on error goto 0
 End sub
 

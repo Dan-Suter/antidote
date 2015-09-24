@@ -5,6 +5,33 @@ Set xobj = Server.CreateObject("MSXML2.ServerXMLHTTP")
 'Pay DPS Payment Upgrade 14/04/2015
 'By Dan. replace pages myinvoices.asp,
 '******************************************
+
+
+Public Function FormatMoney(sString)
+	'change cRound to Normal, Up, Down
+	Const cRound = "Normal"
+	
+	If InStr(sString, ".") Then
+		'Adding extra zero's at the end for error correction (User passes "23." and it
+		'	will still display correctly) 
+		FormatMoney = sString & "000"
+		Select Case cRound
+			Case "Normal"
+				If Mid(FormatMoney, InStr(FormatMoney, ".") + 3) > 4 Then
+					FormatMoney = Left(FormatMoney, InStr(FormatMoney, ".") + 1) & Fix(Mid(FormatMoney, InStr(FormatMoney, ".") + 2, 1) + 1)
+				End If
+			Case "Up"
+				If Mid(FormatMoney, InStr(FormatMoney, ".") + 3) > 0 Then
+					FormatMoney = Left(FormatMoney, InStr(FormatMoney, ".") + 1) & Fix(Mid(FormatMoney, InStr(FormatMoney, ".") + 2, 1) + 1)
+				End If
+		End Select
+		FormatMoney = Left(FormatMoney, InStr(FormatMoney, ".") + 2)
+	Else: FormatMoney = sString & ".00" 'Appending cents to the dollar
+	End If
+	
+	'FormatMoney = "$" & FormatMoney	'Appending dollar sign to beginning
+End Function
+
 function Pay_DPS(sXmlAction)
 
 Dim objXMLhttp 

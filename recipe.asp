@@ -91,11 +91,6 @@ x=closeRSA()
 
        google.visualization.events.addListener(chart, 'select', selectHandler);
       }
-
-
-
-
-
 </script>
 <%
 	'sSQL="Update food set intro='"&stripHTML(replace(rsTemp("Intro"),"'","''"))&"' where id_food='"&rsTemp("id_food")&"'"
@@ -107,7 +102,7 @@ x=closeRSA()
 				<div class="col-sm-5 col-xs-12">
 				<h3 style=""><a href="/recipe.asp?r=<%=id_recipe%>"><%=name%></a></h3>
 			</div>
-			<div class="col-sm-6 col-xs-12">
+			<div class="col-sm-6 col-xs-12" style="margin-top:15px;">
 				<%=prices%>
 			</div>
 			<div class="col-sm-1 col-xs-12">

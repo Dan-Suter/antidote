@@ -19,7 +19,7 @@ sScriptName=ucase(sScriptName)
 <meta property='og:title' content='Antidote Juice Bar' />
 <meta property='og:description' content='Vegetarian Friendly, Serves organic healthy fresh salads, fresh juices, fresh almond milk, a calm &amp; fresh Atmosphere.' />
 <%
-x=rwe(sScriptName)
+'x=rwe(sScriptName)
 if sScriptName="RECIPE.ASP" then
 sSQL="Select image_name from recipies where "
 x=rw("<meta property='og:image' content='/images/recipe/large/c981d487.jpg' />")
@@ -143,6 +143,25 @@ sURL="/admin/ajax/add_Recipe_item.asp?idf="+$("#food_add").val()+"&qty="+$("#foo
     alert('error please login again.'); // or whatever
 });
 }
+
+function add_contribution(iR) {
+//send food id + qty to form
+//alert($("#ingredients_list").html());
+if ($("#ingredients_list").html()=="Add from list above")
+	{	
+		$("#ingredients_list").html("")
+	}
+sURL="/admin/ajax/add_contribution_item.asp?idc="+$("#portion_size").val()+"&c="+$("#contribuition_amount").val()+"&idr="+iR
+//alert(sURL);
+ $.get(sURL, function(data, status){
+ 	sIngredients=$("#contribution_list").html();
+	sIngredients=sIngredients+data;
+	$("#contribution_list").html(sIngredients);
+    }).fail(function() {
+    alert('error please login again.'); // or whatever
+});
+}
+
 function Delete_Ingredient(d)
 {
 sURL="/admin/ajax/add_Recipe_item.asp?d="+d
@@ -153,6 +172,16 @@ sURL="/admin/ajax/add_Recipe_item.asp?d="+d
 
 }
 
+function Delete_Contribution(d)
+{
+sURL="/admin/ajax/add_contribution_item.asp?d="+d
+//alert(sURL);
+ $.get(sURL, function(data, status){
+ 	alert(data);
+	$("#contribution_list"+d).hide()
+	})
+
+}
 //alert (response);
 //send off ingredients to add_Recipe_item.asp
 </script>

@@ -349,12 +349,8 @@ input[type=submit]
     font-weight: 700;
     padding: 10px 10px 10px 10px;
     -webkit-font-smoothing: antialiased;
-    width:100px;
+    width:auto;
 }
 
-.no-indent { 
-		list-style-position: inside;
-    padding-left:0px;}
-.checkout_currency{font-size: 24px;margin-top: 15px;margin-bottom: 10px;text-align: left;
-    display: inline-block;
-    padding: 0;}
+.no-indent { 		list-style-position: inside;    padding-left:0px;}
+.checkout_currency{font-size: 24px;margin-top: 15px;margin-bottom: 10px;	    display: inline-block;    padding: 0;}
